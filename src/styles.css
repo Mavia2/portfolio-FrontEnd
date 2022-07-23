@@ -1,1 +1,143 @@
 /* You can add global styles to this file, and also import other style files */
+
+.header {
+    background-color: rgb(243, 243, 243);
+    height: 40px;
+    justify-content: center;
+}
+
+.name {
+    color: white;
+    font-size: large;
+    font-weight: bold;
+}
+
+.logo {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.imgLogoHeader {
+    height: 20px;
+    width: 20px;
+}
+
+.titulosResaltados {
+    color: rgb(29, 4, 4);
+    font-size: xx-large;
+    font-weight: initial;
+    font-style: inherit;
+}
+
+.letraComunContenido {
+    color: rgb(117, 115, 115);
+    font-size: medium;
+    justify-content: left;
+    font-style: inherit;
+}
+
+.alinear-izquierda {
+    float: left;
+}
+
+.alinear-derecha {
+    float: right;
+    justify-content: flex-end
+}
+
+.titulosResaltadosCeleste {
+    color: rgb(25, 135, 238);
+    font-size: x-large;
+    font-weight: lighter;
+}
+
+.imagenArriba {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.imgPerfilContainer {
+    margin-top: -100px;
+    margin-left: 20px;
+    z-index: 2;
+    flex-direction: column;
+}
+
+.content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.card {
+    border: 1px solid rgb(252, 226, 218);
+    border-radius: 20px;
+    padding: 2em;
+    margin: 0.5%;
+    box-shadow: 5px 5px 5px rgb(250, 237, 237);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.cardHeader {
+    border: 1px solid rgb(255, 222, 226);
+    border-radius: 20px;
+    margin: 0.5%;
+    box-shadow: 5px 5px 5px rgb(250, 237, 237)
+}
+
+.infoData {
+    padding: 16px;
+}
+
+.botonEditarFoto {
+    z-index: 2;
+    margin: 10px;
+}
+
+.botonLogoInstitucion {
+    padding-left: 3px;
+    padding-right: 3px;
+    width: 150px;
+}
+
+.imgInstitucion {
+    width: 70px;
+    object-fit: contain;
+}
+
+.cardProgress {
+    padding-left: 200px;
+    padding-right: 200px;
+    margin: 0.5%;
+}
+
+.imagenInstitucion2 {
+    text-align: center;
+}
+
+.bordershadow {
+    width: 300px;
+    height: 100px;
+    background-color: #FFE0E0;
+    position: relative;
+    box-shadow: 5px 5px 14px 1px #D7D4DB;
+}
+
+.nombreCompleto {
+    color: rgb(29, 4, 4);
+    font-size: xx-large;
+    font-weight: 500;
+    font-style: inherit;
+    border-radius: 20px
+}
+
+.blockquote {
+    padding: 20px;
+    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+
+.icono {
+    color: rgb(190, 190, 190);
+    margin-left: 2px;
+    margin-right: 2px;
+}
