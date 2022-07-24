@@ -1,0 +1,36 @@
+.header {
+    background-color: rgb(243, 243, 243);
+    height: 40px;
+    justify-content: center;
+}
+
+.bannerContainer {
+    position: relative;
+}
+
+.iconoBanner {
+    color: rgb(190, 190, 190);
+    position: absolute;
+    top: 20px;
+    right: 40px
+}
+
+.imagenArriba {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    height: 350px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.imgPerfilContainer {
+    margin-top: -100px;
+    margin-left: 20px;
+    z-index: 2;
+    flex-direction: column;
+    position: relative;
+}
+
+.imgCirculoPerfil {
+    object-fit: cover;
+}

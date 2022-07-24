@@ -1,0 +1,82 @@
+<!-- Seccion header -->
+
+<header class="d-flex flex-wrap justify-content-center p-1 header">
+    <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <span style="margin-left: 10px;">Marcela Viana</span>
+    </div>
+
+    <ul class="nav nav-pills  align-items-center">
+        <li class="nav-item logo">
+            <a href="https://www.facebook.com/selene.sele.9" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <img src="./assets/imagenes/facebook.png" class="imgLogoHeader" />
+            </a>
+        </li>
+        <li class="nav-item logo">
+            <a href="https://www.instagram.com/?hl=es-la" class="d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <img src="./assets/imagenes/instagram.png" class="imgLogoHeader" />
+            </a>
+        </li>
+        <li class="nav-item logo">
+            <a href="https://www.linkedin.com/feed/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <img src="./assets/imagenes/linkedin.png" class="imgLogoHeader" />
+            </a>
+        </li>
+        <li class="nav-item logo">
+            <a href="https://www.whatsapp.com/?lang=es" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <img src="./assets/imagenes/whatsapp.png" class="imgLogoHeader" />
+            </a>
+        </li>
+        <li class="nav-item logo">
+            <a href="https://gestion.pe/resizer/WiPDqksjec_oLA7jzc8qYdD7faw=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/UTGBVQG5SNGDHIHXPVCK3OH5WE.jpg" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <button type="button" class="btn btn-primary btn-sm">
+                        Login
+                    </button>
+            </a>
+        </li>
+    </ul>
+</header>
+
+<div class="content">
+
+    <!-- Seccion info personal -->
+
+    <div class="cardHeader">
+        <div class="bannerContainer">
+            <img class="imagenArriba" [src]="miPortfolio?.imagenHeader">
+            <span class="iconoBanner">
+              <fa-icon [icon]="editIcon" size="lg"></fa-icon>
+            </span>
+        </div>
+        <div class="imgPerfilContainer">
+            <img [src]="miPortfolio?.imagenPerfil" class="rounded-circle imgCirculoPerfil" width="150 " height="150 ">
+            <a href="./assets/imagenes/marce1.jpg" class="justify-content-end mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <span class="icono">
+                <fa-icon [icon]="editIcon" size="lg"></fa-icon>
+              </span>
+            </a>
+        </div>
+        <div class="infoData">
+            <div class="row">
+                <div class=" col-8">
+                    <h1 class="nombreCompleto">{{miPortfolio?.nombre}}</h1>
+                    <div id="Info empresa ">{{miPortfolio?.ocupacion}}</div>
+                    <div id="Info Contacto ">
+                        <span> {{miPortfolio.ciudad}} ({{miPortfolio.pais}})</span>
+                        <a href="https://indalics.com/wp-content/uploads/2018/11/contacto-indalics-768x372.jpg">
+                            <button type="button" class="btn btn-link">Información de contacto</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <a href="https://www.argentina.gob.ar/produccion/transformacion-digital-y-economia-del-conocimiento/argentina-programa" class="d-flex justify-content-end">
+                        <img src="./assets/imagenes/ARGENTINA-PROGRAMA.jpg" class="botonLogoInstitucion" />
+                    </a>
+                </div>
+            </div>
+
+            <button type="button " class="btn btn-primary ">Tengo interés en</button>
+            <button type="button " class="btn btn-light ">Añadir Sección</button>
+            <button type="button " class="btn btn-light">Más</button>
+        </div>
+    </div>
+</div>

@@ -1,11 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-.header {
-    background-color: rgb(243, 243, 243);
-    height: 40px;
-    justify-content: center;
-}
-
 .name {
     color: white;
     font-size: large;
@@ -15,11 +9,6 @@
 .logo {
     padding-left: 5px;
     padding-right: 5px;
-}
-
-.imgLogoHeader {
-    height: 20px;
-    width: 20px;
 }
 
 .titulosResaltados {
@@ -45,22 +34,9 @@
     justify-content: flex-end
 }
 
-.titulosResaltadosCeleste {
-    color: rgb(25, 135, 238);
-    font-size: x-large;
-    font-weight: lighter;
-}
-
-.imagenArriba {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-}
-
-.imgPerfilContainer {
-    margin-top: -100px;
-    margin-left: 20px;
-    z-index: 2;
-    flex-direction: column;
+.imgLogoHeader {
+    height: 20px;
+    width: 20px;
 }
 
 .content {

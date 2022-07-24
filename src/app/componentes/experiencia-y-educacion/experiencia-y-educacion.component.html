@@ -1,0 +1,87 @@
+<!-- Seccion experiencia y educacion  -->
+<div class="card ">
+    <div class="row justify-content-between align-items-center">
+        <div class="col-6 titulosResaltados">
+            Experiencia
+        </div>
+        <div class="col-2 d-flex justify-content-end">
+            <a href=" https://st.depositphotos.com/1029663/1358/i/950/depositphotos_13586446-stock-photo-experience.jpg">
+                <i class="fa-solid fa-circle-plus fa-xl icono"></i>
+            </a>
+        </div>
+    </div>
+    <div *ngFor="let experiencia of experienciaList ">
+        <div class="row py-3">
+            <div class="col-lg-1 d-lg-flex justify-content-end">
+                <img [src]="experiencia.fotoUrl" class="imgInstitucion">
+            </div>
+            <div class="col-lg-11 d-flex justify-content-between">
+                <div class="col-10">
+                    <h5 class="card-title ">{{experiencia.institucion}}</h5>
+                    <div class="card-text ">{{experiencia.cargo}}</div>
+                    <div class="card-text ">{{experiencia.descripcion}}</div>
+                    <div class="card-text "><small class="text-muted ">{{experiencia.fechaInicio}} - {{experiencia.fechaFin}} - {{experiencia.lugar}}</small></div>
+                </div>
+                <div>
+                    <div class="nav nav-pills ">
+
+                        <a href=" https://cdn-icons-png.flaticon.com/512/84/84380.png " class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none ">
+                            <i class="fa-regular fa-pen-to-square fa-xl icono"></i>
+                        </a>
+
+
+                        <a href=" https://ayudawp.com/wp-content/uploads/2018/09/borrar-imagenes-sin-usar-en-wordpress.png " class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none ">
+                            <i class="fa-regular fa-trash-can fa-xl icono"></i>
+                        </a>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="row justify-content-between align-items-center row py-3">
+        <div class="col-6 titulosResaltados">
+            Educación
+        </div>
+        <div class="col-2 d-flex justify-content-end">
+            <a href=" https://st.depositphotos.com/1029663/1358/i/950/depositphotos_13586446-stock-photo-experience.jpg">
+                <i class="fa-solid fa-circle-plus fa-xl icono"></i>
+            </a>
+        </div>
+    </div>
+    <div *ngFor="let educacion of educacionList ">
+        <div class="row py-3">
+            <div class="col-lg-1 d-lg-flex justify-content-end">
+                <img [src]="educacion.fotoUrl" class="imgInstitucion">
+            </div>
+            <div class="col-lg-11 d-flex justify-content-between">
+                <div class="col-10">
+                    <h5 class="card-title ">{{educacion.institucion}}</h5>
+                    <div class="card-text ">{{educacion.titulo}}</div>
+                    <div class="card-text "><small class="text-muted ">{{educacion.fechaInicio}} - {{educacion.fechaFin}} - {{educacion.lugar}}</small></div>
+                </div>
+                <div>
+                    <div class="nav nav-pills ">
+
+                        <a href=" https://cdn-icons-png.flaticon.com/512/84/84380.png " class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none ">
+                            <i class="fa-regular fa-pen-to-square fa-xl icono"></i>
+                        </a>
+
+
+                        <a href=" https://ayudawp.com/wp-content/uploads/2018/09/borrar-imagenes-sin-usar-en-wordpress.png " class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none ">
+                            <i class="fa-regular fa-trash-can fa-xl icono"></i>
+                        </a>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
