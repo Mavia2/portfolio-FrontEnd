@@ -45,8 +45,13 @@
         "fechaFin": "Agosto 2022",
         "lugar": "Rosario"
     }],
-    "hardSkill": 25,
-    "softSkill": 75,
+    "skills": [{
+        "nombre": "hardSkill",
+        "porcentaje": 25
+    }, {
+        "nombre": "softSkill",
+        "porcentaje": 75
+    }],
     "proyectos": [{
         "titulo": "Mi Portfolio.",
         "descripcion": "Mi presentación al mundo como desarrolladora FullStack .Trabajo final integrador del Plan Argentina Programa.",

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
+import { faPen, faPlusCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-experiencia-y-educacion',
@@ -10,6 +10,9 @@ import { PorfolioService } from 'src/app/servicios/porfolio.service';
 export class ExperienciaYEducacionComponent implements OnInit {
   educacionList: any;
   experienciaList:any;
+  editIcon = faPen;
+  deleteIcon = faTrashAlt;
+  addIcon = faPlusCircle
 
   constructor(private datosPorfolio:PorfolioService ) { }
 

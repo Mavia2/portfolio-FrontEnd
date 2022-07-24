@@ -58,10 +58,17 @@
         <div class="infoData">
             <div class="row">
                 <div class=" col-8">
-                    <h1 class="nombreCompleto">{{miPortfolio?.nombre}}</h1>
+                    <div class="nombreContainer">
+                        <h1 class="nombreCompleto">{{miPortfolio?.nombre}}</h1>
+                        <a href="./assets/imagenes/marce1.jpg" class="justify-content-end mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                            <span class="icono">
+                      <fa-icon [icon]="editIcon" size="lg"></fa-icon>
+                    </span>
+                        </a>
+                    </div>
                     <div id="Info empresa ">{{miPortfolio?.ocupacion}}</div>
                     <div id="Info Contacto ">
-                        <span> {{miPortfolio.ciudad}} ({{miPortfolio.pais}})</span>
+                        <span> {{miPortfolio?.ciudad}} ({{miPortfolio?.pais}})</span>
                         <a href="https://indalics.com/wp-content/uploads/2018/11/contacto-indalics-768x372.jpg">
                             <button type="button" class="btn btn-link">Información de contacto</button>
                         </a>
@@ -73,10 +80,6 @@
                     </a>
                 </div>
             </div>
-
-            <button type="button " class="btn btn-primary ">Tengo interés en</button>
-            <button type="button " class="btn btn-light ">Añadir Sección</button>
-            <button type="button " class="btn btn-light">Más</button>
         </div>
     </div>
 </div>

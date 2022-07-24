@@ -8,6 +8,11 @@
     position: relative;
 }
 
+.nombreContainer {
+    display: flex;
+    align-items: center;
+}
+
 .iconoBanner {
     color: rgb(190, 190, 190);
     position: absolute;
@@ -33,4 +38,13 @@
 
 .imgCirculoPerfil {
     object-fit: cover;
+}
+
+.nombreCompleto {
+    color: rgb(29, 4, 4);
+    font-size: xx-large;
+    font-weight: 500;
+    font-style: inherit;
+    border-radius: 20px;
+    margin-right: 15px
 }

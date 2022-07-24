@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
+import { faPen, faPlusCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-proyectos',
@@ -8,6 +9,9 @@ import { PorfolioService } from 'src/app/servicios/porfolio.service';
 })
 export class ProyectosComponent implements OnInit {
   proyectosList:any;
+  editIcon = faPen;
+  deleteIcon = faTrashAlt;
+  addIcon = faPlusCircle
 
   constructor(private datosPorfolio:PorfolioService) { }
 

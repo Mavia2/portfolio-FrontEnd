@@ -3,59 +3,42 @@
 
     <div class="row justify-content-between align-items-center">
         <div class="col-6 titulosResaltados">
-            Soft Skills & Hard Skills
+            Skills
         </div>
         <div class="col-2 d-flex justify-content-end">
             <a href=" https://st.depositphotos.com/1029663/1358/i/950/depositphotos_13586446-stock-photo-experience.jpg">
-                <i class="fa-solid fa-circle-plus fa-xl icono"></i>
+                <span class="icono">
+                <fa-icon [icon]="addIcon" size="lg"></fa-icon>
+              </span>
             </a>
         </div>
     </div>
 
-    <div class="row justify-content-center align-items-center">
-        <div class="col-7">
-            <p class="card-textletraComunContenido d-flex justify-content-center ">Hard Skills</p>
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped bg-info " role="progressbar " [style.width.%]="hardSkill" aria-valuenow="25" aria-valuemin="0 " aria-valuemax="100 "></div>
-            </div>
-        </div>
-        <div class="col-2 justify-content-start">
-            <div class="nav nav-pills ">
-                <a href=" https://cdn-icons-png.flaticon.com/512/84/84380.png " class="d-flex align-items-center text-decoration-none ">
-                    <i class="fa-regular fa-pen-to-square fa-xl icono"></i>
-                </a>
-
-
-                <a href=" https://ayudawp.com/wp-content/uploads/2018/09/borrar-imagenes-sin-usar-en-wordpress.png " class="d-flex align-items-center text-decoration-none">
-                    <i class="fa-regular fa-trash-can fa-xl icono"></i>
-                </a>
-            </div>
-        </div>
-
-    </div>
-
-
-
-    <div class="row justify-content-center align-items-center">
-        <div class="col-7">
-            <p class="card-textletraComunContenido d-flex justify-content-center ">Soft Skills</p>
-            <div class="progress ">
-                <div class="progress-bar progress-bar-striped bg-warning " role="progressbar " style="width: 75% " aria-valuenow="75 " aria-valuemin="0 " aria-valuemax="100 ">
+    <div *ngFor="let skill of skillsList">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-7">
+                <p class="card-textletraComunContenido d-flex justify-content-center ">{{skill.nombre}}</p>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-info " role="progressbar " [style.width.%]="skill.porcentaje" aria-valuenow="25" aria-valuemin="0 " aria-valuemax="100 "></div>
                 </div>
             </div>
-        </div>
-        <div class="col-2 justify-content-start">
-            <div class="nav nav-pills ">
-                <a href=" https://cdn-icons-png.flaticon.com/512/84/84380.png " class="d-flex align-items-center text-decoration-none ">
-                    <i class="fa-regular fa-pen-to-square fa-xl icono"></i>
-                </a>
+            <div class="col-2 justify-content-start">
+                <div class="nav nav-pills ">
+                    <a href=" https://cdn-icons-png.flaticon.com/512/84/84380.png " class="d-flex align-items-center text-decoration-none ">
+                        <span class="icono">
+                    <fa-icon [icon]="editIcon" size="lg"></fa-icon>
+                  </span>
+                    </a>
 
 
-                <a href=" https://ayudawp.com/wp-content/uploads/2018/09/borrar-imagenes-sin-usar-en-wordpress.png " class="d-flex align-items-center text-decoration-none">
-                    <i class="fa-regular fa-trash-can fa-xl icono"></i>
-                </a>
+                    <a href=" https://ayudawp.com/wp-content/uploads/2018/09/borrar-imagenes-sin-usar-en-wordpress.png " class="d-flex align-items-center text-decoration-none">
+                        <span class="icono">
+                    <fa-icon [icon]="deleteIcon" size="lg"></fa-icon>
+                  </span>
+                    </a>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
 </div>
