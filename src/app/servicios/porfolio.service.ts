@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PorfolioService {
+  url:string=""
 
   constructor(private http:HttpClient) {}
 
