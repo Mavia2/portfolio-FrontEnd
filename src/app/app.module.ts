@@ -12,9 +12,12 @@ import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IniciarSesionComponent } from './componentes/iniciar-sesion/iniciar-sesion.component';
 import { PortfolioComponent } from './componentes/portfolio/portfolio.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InterceptorService } from './servicios/interceptor.service';
 import { PorfolioService } from './servicios/porfolio.service';
+
+
+
 
 
 
