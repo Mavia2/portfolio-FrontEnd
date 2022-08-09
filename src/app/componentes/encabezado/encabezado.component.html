@@ -62,10 +62,10 @@
                 <div class=" col-8">
                     <div class="nombreContainer">
                         <h1 class="nombreCompleto">{{miPortfolio?.nombre}} {{miPortfolio?.apellido}}</h1>
-                        <button class="btn" (click)="openFormModal()">
+                        <button class="btn" (click)="openFormModal()" *ngIf="estaLogueado">
                             <span class="icono">
-                      <fa-icon [icon]="editIcon" size="lg"></fa-icon>
-                    </span>
+                              <fa-icon [icon]="editIcon" size="lg"></fa-icon>
+                            </span>
                         </button>
                     </div>
                     <div id="Info empresa ">{{miPortfolio?.ocupacion}}</div>

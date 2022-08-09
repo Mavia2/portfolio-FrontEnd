@@ -31,4 +31,8 @@ export class AutenticacionService {
     return this.currentUserSubject.value;
    }
 
+   get estaLogueado():boolean {
+    return this.currentUserSubject.value && this.currentUserSubject.value.accessToken;
+   }
+
 }

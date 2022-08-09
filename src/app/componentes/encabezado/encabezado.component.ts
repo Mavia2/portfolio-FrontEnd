@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 declare var window: any;
+import { AutenticacionService } from '../../servicios/autenticacion.service';
 
 
 @Component({
@@ -16,8 +17,9 @@ export class EncabezadoComponent implements OnInit {
   formModal: any;
   form:FormGroup;
 
+  @Input() estaLogueado: boolean = false;
 
-  constructor(private datosPorfolio:PorfolioService, private formBuilder:FormBuilder ) {
+  constructor(private datosPorfolio:PorfolioService, private formBuilder:FormBuilder) {
     this.form=this.formBuilder.group(
       {
         nombre:['',[Validators.required]],
