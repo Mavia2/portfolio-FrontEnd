@@ -5,14 +5,14 @@
             Experiencia
         </div>
         <div class="col-2 d-flex justify-content-end">
-            <a href=" https://st.depositphotos.com/1029663/1358/i/950/depositphotos_13586446-stock-photo-experience.jpg">
+            <button class="btn" (click)="openFormModal('crear')" *ngIf="estaLogueado">
                 <span class="icono">
                   <fa-icon [icon]="addIcon" size="lg"></fa-icon>
                 </span>
-            </a>
+          </button>
         </div>
     </div>
-    <div *ngFor="let experiencia of experienciaList ">
+    <div *ngFor="let experiencia of experienciaList, index as indexOfelement ">
         <div class="row py-3">
             <div class="col-lg-1 d-lg-flex justify-content-end">
                 <img [src]="experiencia.fotoUrl" class="imgInstitucion">
@@ -27,11 +27,11 @@
                 <div>
                     <div class="nav nav-pills ">
 
-                        <a href=" https://cdn-icons-png.flaticon.com/512/84/84380.png " class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none ">
+                        <button class="btn" (click)="openFormModal('edit',  indexOfelement)" *ngIf="estaLogueado">
                             <span class="icono">
                             <fa-icon [icon]="editIcon" size="lg"></fa-icon>
                           </span>
-                        </a>
+                       </button>
 
 
                         <a href=" https://ayudawp.com/wp-content/uploads/2018/09/borrar-imagenes-sin-usar-en-wordpress.png " class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none ">
@@ -92,6 +92,97 @@
 
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!--form modal experiencia-->
+    <div class="modal fade" id="modalExperiencia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="esEditar">Editar Experiencia</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="!esEditar">crear Experiencia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form [formGroup]="form" (ngSubmit)="save($event, esEditar, index )">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="institucion" class="form-label">Institución</label>
+                            <input formControlName="institucion" class="form-control" id="institucion" aria-describedby="institucionHelp">
+                            <div *ngIf="form.get('institucion')?.errors && form.get('institucion')?.touched">
+                                <p *ngIf="form.get('institucion')?.hasError('required')" class="text-danger">
+                                    El nombre de la Institución es requerido.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fotoUrl" class="form-label">Logo Institucion</label>
+                            <input formControlName="fotoUrl" class="form-control" id="fotoUrl" aria-describedby="logoInstitucionHelp">
+                            <div *ngIf="form.get('fotoUrl')?.errors && form.get('fotoUrl')?.touched">
+                                <p *ngIf="form.get('fotoUrl')?.hasError('required')" class="text-danger">
+                                    Adjunte por favor Logo Institución.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cargo" class="form-label">Cargo</label>
+                            <input formControlName="cargo" class="form-control" id="cargo" aria-describedby="cargoHelp">
+                            <div *ngIf="form.get('cargo')?.errors && form.get('cargo')?.touched">
+                                <p *ngIf="form.get('cargo')?.hasError('required')" class="text-danger">
+                                    La ocupación requerida.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <input formControlName="descripcion" class="form-control" id="descripcion" aria-describedby="descripcionHelp">
+                            <div *ngIf="form.get('descripcion')?.errors && form.get('descripcion')?.touched">
+                                <p *ngIf="form.get('descripcion')?.hasError('required')" class="text-danger">
+                                    Por favor describa el trabajo desarrolado en dicha Institución.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="fechaInicio" class="form-label">Fecha Inicio:</label>
+                            <input formControlName="fechaInicio" class="form-control" id="fechaInicio" aria-describedby="fechaInicioHelp">
+                            <div *ngIf="form.get('fechaInicio')?.errors && form.get('fechaInicio')?.touched">
+                                <p *ngIf="form.get('fechaInicio')?.hasError('fechaInicio')" class="text-danger">
+                                    Ingrese por favor la fecha de inicio.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="fechaFin" class="form-label">Fecha Fin:</label>
+                            <input formControlName="fechaFin" class="form-control" id="fechaFin" aria-describedby="fechaFinHelp">
+                            <div *ngIf="form.get('fechaFin')?.errors && form.get('fechaFin')?.touched">
+                                <p *ngIf="form.get('fechaFin')?.hasError('fechaFin')" class="text-danger">
+                                    Ingrese por favor la fecha de finalización laboral.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="lugar" class="form-label">Ciudad:</label>
+                            <input formControlName="lugar" class="form-control" id="lugar" aria-describedby="ciudadHelp">
+                            <div *ngIf="form.get('lugar')?.errors && form.get('lugar')?.touched">
+                                <p *ngIf="form.get('lugar')?.hasError('lugar')" class="text-danger">
+                                    Ingrese por favor la ciudad en donde trabajó.
+                                </p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                Guardar Cambios
+              </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

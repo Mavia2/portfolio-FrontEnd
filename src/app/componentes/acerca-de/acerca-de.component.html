@@ -6,12 +6,44 @@
         </div>
         <div class="col-2 d-flex justify-content-end">
 
-            <a href=" https://es.123rf.com/photo_75401422_acerca-de-nosotros-icono-acerca-de-nosotros-bot%C3%B3n-p%C3%A1gina-web-sobre-fondo-blanco-.html">
+            <button class="btn" (click)="openFormModal()" *ngIf="estaLogueado">
                 <span class="icono">
                 <fa-icon [icon]="editIcon" size="lg"></fa-icon>
               </span>
-            </a>
+              </button>
+
         </div>
     </div>
     <div class="letraComunContenido ">{{acercaDe}} </div>
+
+    <!--form modal-->
+    <div class="modal fade" id="myModalAcercaDe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Acerca De:</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form [formGroup]="form" (ngSubmit)="save($event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Acerca De</label>
+                            <input formControlName="acercaDe" class="form-control" id="nombre" aria-describedby="acercaDeHelp">
+                            <div *ngIf="acercaDeForm?.errors && acercaDeForm?.touched">
+                                <p *ngIf="acercaDeForm?.hasError('required')" class="text-danger">
+                                    El contenido AcercaDe es requerido.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                    Guardar Cambios
+                  </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>

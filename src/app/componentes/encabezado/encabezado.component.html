@@ -71,9 +71,9 @@
                     <div id="Info empresa ">{{miPortfolio?.ocupacion}}</div>
                     <div id="Info Contacto ">
                         <span> {{miPortfolio?.ciudad}} ({{miPortfolio?.pais}})</span>
-                        <a href="https://indalics.com/wp-content/uploads/2018/11/contacto-indalics-768x372.jpg">
-                            <button type="button" class="btn btn-link">Información de contacto</button>
-                        </a>
+
+                        <button type="button" class="btn btn-link" (click)="openformInfoContacto()">Información de contacto</button>
+
                     </div>
                 </div>
                 <div class="col-4">
@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-    <!--form modal-->
+    <!--form modal infopersonal-->
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -112,6 +112,36 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <label for="ocupacion" class="form-label">Ocupación</label>
+                            <input formControlName="ocupacion" class="form-control" id="ocupacion" aria-describedby="ocupacionHelp">
+                            <div *ngIf="form.get('ocupacion')?.errors && form.get('ocupacion')?.touched">
+                                <p *ngIf="form.get('ocupacion')?.hasError('required')" class="text-danger">
+                                    La ocupación requerida.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ciudad" class="form-label">Ciudad</label>
+                            <input formControlName="ciudad" class="form-control" id="ciudad" aria-describedby="ciudadHelp">
+                            <div *ngIf="form.get('ciudad')?.errors && form.get('ciudad')?.touched">
+                                <p *ngIf="form.get('ciudad')?.hasError('required')" class="text-danger">
+                                    La ciudad es requerida.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="pais" class="form-label">País</label>
+                            <input formControlName="pais" class="form-control" id="pais" aria-describedby="paisHelp">
+                            <div *ngIf="form.get('pais')?.errors && form.get('pais')?.touched">
+                                <p *ngIf="form.get('pais')?.hasError('pais')" class="text-danger">
+                                    El país es requerido.
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">
@@ -123,4 +153,49 @@
         </div>
     </div>
 
+    <!--form modal-->
+    <div class="modal fade" id="infoContacto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="estaLogueado">Editar Información de Contacto:</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="!estaLogueado">Información de Contacto:</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form [formGroup]="form" (ngSubmit)="saveInfoContacto($event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="celular" class="form-label">Celular</label>
+                            <input formControlName="celular" class="form-control" id="nombre" aria-describedby="celularHelp">
+                            <div *ngIf="form.get('celular')?.errors && form.get('celular')?.touched">
+                                <p *ngIf="form.get('celular')?.hasError('required')" class="text-danger">
+                                    El número de celular es requerido.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input formControlName="email" class="form-control" id="email" aria-describedby="emailHelp" [readonly]='!estaLogueado'>
+                            <div *ngIf="email?.errors && email?.touched">
+                                <p *ngIf="email?.hasError('required')" class="text-danger">
+                                    El email es requerido.
+                                </p>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                    <div class="modal-footer" *ngIf="estaLogueado">
+                        <button type="submit" class="btn btn-primary">
+                    Guardar Cambios
+                  </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

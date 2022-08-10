@@ -13,7 +13,8 @@ export class PortfolioComponent implements OnInit {
 
   ngOnInit(): void {
 
-        this.estaLogueado = this.autenticacionServicio.estaLogueado;
+        // this.estaLogueado = this.autenticacionServicio.estaLogueado;
+        this.estaLogueado = true;
 
   }
 
