@@ -11,14 +11,21 @@ declare var window: any;
 })
 export class ExperienciaYEducacionComponent implements OnInit {
   educacionList: any;
-  experienciaList:[any];
+  experienciaList:any;
   editIcon = faPen;
   deleteIcon = faTrashAlt;
   addIcon = faPlusCircle;
   formModal: any;
-  form:FormGroup;
+  formModalEducacion: any;
+  formModalEliminar: any;
+  form: FormGroup;
+  formEducacion: FormGroup;
   esEditar = true;
   index = 0;
+  tituloEliminar='';
+  mensajeEliminar='';
+  eliminarIndex: number;
+  eliminarTipo: string;
 
 
   @Input() estaLogueado: boolean = false;
@@ -35,6 +42,16 @@ export class ExperienciaYEducacionComponent implements OnInit {
         lugar:['',[Validators.required]],
       }
     )
+    this.formEducacion=this.formBuilder.group(
+      {
+        institucion:['',[Validators.required]],
+        fotoUrl:['',[Validators.required]],
+        titulo:['',[Validators.required]],
+        fechaInicio:['',[Validators.required]],
+        fechaFin:['',[Validators.required]],
+        lugar:['',[Validators.required]],
+      }
+    )
    }
 
   ngOnInit(): void {
@@ -42,8 +59,15 @@ export class ExperienciaYEducacionComponent implements OnInit {
       this.educacionList=data.educacion;
       this.experienciaList=data.experiencia;
     });
+
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('modalExperiencia')
+    );
+    this.formModalEducacion = new window.bootstrap.Modal(
+      document.getElementById('modalEducacion')
+    );
+    this.formModalEliminar = new window.bootstrap.Modal(
+      document.getElementById('modalEliminar')
     );
 
   }
@@ -61,6 +85,44 @@ export class ExperienciaYEducacionComponent implements OnInit {
     }
   }
 
+  openFormModalEducacion(type: string, index?: any) {
+    if (type == 'edit') {
+      this.index = index
+      this.esEditar = true
+      this.formEducacion.setValue(this.educacionList[index])
+      this.formModalEducacion.show();
+    } else {
+      this.esEditar = false
+      this.formEducacion.reset()
+      this.formModalEducacion.show();
+    }
+  }
+
+  openEliminar(tipo: string, index: any){
+    this.eliminarTipo = tipo
+    if (tipo == 'educacion') {
+      this.tituloEliminar = 'Eliminar Educacion';
+      this.mensajeEliminar = `Esta seguro que desea eliminar esta institucion ${this.educacionList[index].institucion}`
+      // endpoint delete
+    } else {
+      this.tituloEliminar = 'Eliminar experiencia';
+      this.mensajeEliminar = `Esta seguro que desea eliminar esta experiencia ${this.experienciaList[index].institucion}`
+    }
+    this.eliminarIndex = index
+    this.formModalEliminar.show();
+  }
+
+  eliminar(){
+    if (this.eliminarTipo == 'educacion') {
+      delete this.educacionList[this.eliminarIndex];
+      // endpoint delete
+    } else {
+      delete this.experienciaList[this.eliminarIndex];
+      // endpoint delete
+    }
+    this.formModalEliminar.hide();
+  }
+
   save(event: Event, esEditar: boolean, index?: any) {
     event.preventDefault
     if (esEditar) {
@@ -71,6 +133,18 @@ export class ExperienciaYEducacionComponent implements OnInit {
       // agregar experiencia en base de datos -> pegarle al endpot de crear experiencia
     }
     this.formModal.hide();
+  }
+
+  saveEducacion(event: Event, esEditar: boolean, index?: any) {
+    event.preventDefault
+    if (esEditar) {
+      this.educacionList[index] = this.formEducacion.value
+    // guardar cambios en base de datos -> pegarle al endpot de update experiencia
+    } else {
+      this.educacionList.unshift(this.formEducacion.value);
+      // agregar experiencia en base de datos -> pegarle al endpot de crear experiencia
+    }
+    this.formModalEducacion.hide();
   }
 
   get institucion() {
