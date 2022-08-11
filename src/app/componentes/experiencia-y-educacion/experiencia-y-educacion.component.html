@@ -78,11 +78,11 @@
                               <fa-icon [icon]="editIcon" size="lg"></fa-icon>
                             </span>
                         </button>
-                        <a href=" https://ayudawp.com/wp-content/uploads/2018/09/borrar-imagenes-sin-usar-en-wordpress.png " class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none ">
-                            <span class="icono">
+                        <button class="btn" (click)="openEliminar('educacion',  indexOfelement)" *ngIf="estaLogueado">
+                        <span class="icono">
                               <fa-icon [icon]="deleteIcon" size="lg"></fa-icon>
                             </span>
-                        </a>
+                        </button>
 
 
                     </div>

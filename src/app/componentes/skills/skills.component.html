@@ -6,15 +6,15 @@
             Skills
         </div>
         <div class="col-2 d-flex justify-content-end">
-            <a href=" https://st.depositphotos.com/1029663/1358/i/950/depositphotos_13586446-stock-photo-experience.jpg">
+            <button class="btn" (click)="openFormModal('crear')" *ngIf="estaLogueado">
                 <span class="icono">
                 <fa-icon [icon]="addIcon" size="lg"></fa-icon>
               </span>
-            </a>
+          </button>
         </div>
     </div>
 
-    <div *ngFor="let skill of skillsList">
+    <div *ngFor="let skill of skillsList, index as indexOfelement">
         <div class="row justify-content-center align-items-center">
             <div class="col-7">
                 <p class="card-textletraComunContenido d-flex justify-content-center ">{{skill.nombre}}</p>
@@ -24,21 +24,79 @@
             </div>
             <div class="col-2 justify-content-start">
                 <div class="nav nav-pills ">
-                    <a href=" https://cdn-icons-png.flaticon.com/512/84/84380.png " class="d-flex align-items-center text-decoration-none ">
+                    <button class="btn" (click)="openFormModal('edit',  indexOfelement)" *ngIf="estaLogueado">
                         <span class="icono">
                     <fa-icon [icon]="editIcon" size="lg"></fa-icon>
                   </span>
-                    </a>
-
-
-                    <a href=" https://ayudawp.com/wp-content/uploads/2018/09/borrar-imagenes-sin-usar-en-wordpress.png " class="d-flex align-items-center text-decoration-none">
-                        <span class="icono">
+                </button>
+                    <button class="btn" (click)="openEliminar(indexOfelement)" *ngIf="estaLogueado">
+                  <span class="icono">
                     <fa-icon [icon]="deleteIcon" size="lg"></fa-icon>
                   </span>
-                    </a>
+                </button>
                 </div>
             </div>
+        </div>
+    </div>
+    <!--form modal Educacion-->
+    <div class="modal fade" id="modalSkill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="esEditar">Editar skills</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="!esEditar">Crear skills</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form [formGroup]="form" (ngSubmit)="save($event, esEditar, index )">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input formControlName="nombre" class="form-control" id="nombre" aria-describedby="institucionHelp">
+                            <div *ngIf="form.get('nombre')?.errors && form.get('nombre')?.touched">
+                                <p *ngIf="form.get('nombre')?.hasError('required')" class="text-danger">
+                                    El nombre de la skiil es requerida.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="porcentaje" class="form-label">% Skill</label>
+                            <input formControlName="porcentaje" class="form-control" id="porcentaje" aria-describedby="logoInstitucionHelp">
+                            <div *ngIf="form.get('porcentaje')?.errors && form.get('porcentaje')?.touched">
+                                <p *ngIf="form.get('porcentaje')?.hasError('porcentaje')" class="text-danger">
+                                    El porcentaje es requerido.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                          Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
+    <!--form modal Eliminar Educacion-->
+    <div class="modal fade" id="modalEliminarSkill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{tituloEliminar}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        {{mensajeEliminar}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="eliminar()">
+                  Eliminar
+                </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
