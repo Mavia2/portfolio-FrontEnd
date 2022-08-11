@@ -47,7 +47,7 @@ export class SkillsComponent implements OnInit {
       document.getElementById('modalSkill')
     );
     this.formModalEliminar = new window.bootstrap.Modal(
-      document.getElementById('modalEliminarSkill')
+      document.getElementById('modalEliminar')
     );
   }
 

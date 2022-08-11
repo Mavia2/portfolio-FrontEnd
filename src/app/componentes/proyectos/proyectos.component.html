@@ -5,14 +5,14 @@
             Proyectos
         </div>
         <div class="col-2 d-flex justify-content-end">
-            <a href=" https://st.depositphotos.com/1029663/1358/i/950/depositphotos_13586446-stock-photo-experience.jpg">
+            <button class="btn" (click)="openFormModal('crear')" *ngIf="estaLogueado">
                 <span class="icono">
                 <fa-icon [icon]="addIcon" size="lg"></fa-icon>
               </span>
-            </a>
+          </button>
         </div>
     </div>
-    <div *ngFor="let proyecto of proyectosList ">
+    <div *ngFor="let proyecto of proyectosList, index as indexOfelement ">
         <div class="row py-3">
             <div class="col-10">
                 <a class="text-decoration-none h4 titulosResaltadosCeleste" [href]="proyecto.proyectoUrl">
@@ -23,22 +23,93 @@
             <div class="col-2 d-flex justify-content-end">
                 <div class="nav nav-pills ">
 
-                    <a href=" https://cdn-icons-png.flaticon.com/512/84/84380.png " class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none ">
+                    <button class="btn" (click)="openFormModal('edit',  indexOfelement)" *ngIf="estaLogueado">
                         <span class="icono">
                         <fa-icon [icon]="editIcon" size="lg"></fa-icon>
                       </span>
-                    </a>
+                  </button>
 
 
-                    <a href=" https://ayudawp.com/wp-content/uploads/2018/09/borrar-imagenes-sin-usar-en-wordpress.png " class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none ">
+                    <button class="btn" (click)="openEliminar(indexOfelement)" *ngIf="estaLogueado">
                         <span class="icono">
                         <fa-icon [icon]="deleteIcon" size="lg"></fa-icon>
                       </span>
-                    </a>
+                  </button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!--form modal skills-->
+    <div class="modal fade" id="modalProyectos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="esEditar">Editar Proyecto</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="!esEditar">Crear Proyecto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form [formGroup]="form" (ngSubmit)="save($event, esEditar, index )">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="titulo" class="form-label">Titulo</label>
+                            <input formControlName="titulo" class="form-control" id="titulo" aria-describedby="tituloHelp">
+                            <div *ngIf="form.get('titulo')?.errors && form.get('titulo')?.touched">
+                                <p *ngIf="form.get('titulo')?.hasError('required')" class="text-danger">
+                                    El nombre del proyecto es requerido.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <input formControlName="descripcion" class="form-control" id="descripcion" aria-describedby="descripcionHelp">
+                            <div *ngIf="form.get('descripcion')?.errors && form.get('descripcion')?.touched">
+                                <p *ngIf="form.get('descripcion')?.hasError('descripcion')" class="text-danger">
+                                    La descripción del proyecto requerida.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="proyectoUrl" class="form-label">Proyecto Url</label>
+                            <input formControlName="proyectoUrl" class="form-control" id="proyectoUrl" aria-describedby="proyectoUrlHelp">
+                            <div *ngIf="form.get('proyectoUrl')?.errors && form.get('proyectoUrl')?.touched">
+                                <p *ngIf="form.get('proyectoUrl')?.hasError('proyectoUrl')" class="text-danger">
+                                    La Url del proyecto requerida.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">
+                              Guardar Cambios
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--form modal Eliminar skills-->
+    <div class="modal fade" id="modalEliminarProyectos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{tituloEliminar}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        {{mensajeEliminar}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="eliminar()">
+              Eliminar
+            </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
