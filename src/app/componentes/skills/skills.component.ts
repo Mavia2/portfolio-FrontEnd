@@ -47,7 +47,7 @@ export class SkillsComponent implements OnInit {
       document.getElementById('modalSkill')
     );
     this.formModalEliminar = new window.bootstrap.Modal(
-      document.getElementById('modalEliminar')
+      document.getElementById('modalEliminarSkill')
     );
   }
 
@@ -66,7 +66,7 @@ export class SkillsComponent implements OnInit {
 
   openEliminar( index: any){
     this.tituloEliminar = 'Eliminar skills';
-    this.mensajeEliminar = `Esta seguro que desea eliminar este skill ${this.skillsList[index].nombre}?`
+    this.mensajeEliminar = `Esta seguro que desea eliminar  ${this.skillsList[index].nombre}?`
     // endpoint delete
     this.eliminarIndex = index
     this.formModalEliminar.show();
