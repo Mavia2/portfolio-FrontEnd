@@ -31,6 +31,7 @@ export class ProyectosComponent implements OnInit {
       {
         titulo:['',[Validators.required]],
         descripcion:['',[Validators.required]],
+        fechaRealizacion:['',[Validators.required]],
         proyectoUrl:['',[Validators.required]],
 
       }

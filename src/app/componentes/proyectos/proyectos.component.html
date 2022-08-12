@@ -19,6 +19,7 @@
                     {{proyecto.titulo}}
                 </a>
                 <div class="letraComunContenido ">{{proyecto.descripcion}}</div>
+                <div class="letraComunContenido ">Fecha de realización: {{proyecto.fechaRealizacion}}</div>
             </div>
             <div class="col-2 d-flex justify-content-end">
                 <div class="nav nav-pills ">
@@ -40,7 +41,7 @@
         </div>
     </div>
 
-    <!--form modal skills-->
+    <!--form modal proyectos-->
     <div class="modal fade" id="modalProyectos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -69,6 +70,16 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <label for="fechaRealizacion" class="form-label">Fecha Realización</label>
+                            <input formControlName="fechaRealizacion" class="form-control" id="fechaRealizacion" aria-describedby="fecharealizacionHelp">
+                            <div *ngIf="form.get('fechaRealizacion')?.errors && form.get('fechaRealizacion')?.touched">
+                                <p *ngIf="form.get('fechaRealizacion')?.hasError('fechaRealizacion')" class="text-danger">
+                                    La fecha de realización del proyecto requerida.
+                                </p>
+                            </div>
+                        </div>
+
                         <div class="mb-3">
                             <label for="proyectoUrl" class="form-label">Proyecto Url</label>
                             <input formControlName="proyectoUrl" class="form-control" id="proyectoUrl" aria-describedby="proyectoUrlHelp">
@@ -111,5 +122,4 @@
             </div>
         </div>
     </div>
-
 </div>

@@ -3,7 +3,7 @@
     "apellido": "Viana",
     "imagenHeader": "https://www.xtrafondos.com/wallpapers/espiral-tecnologico-4564.jpg",
     "imagenPerfil": "https://files.loveisinmyhair.com/files/styles/large/public/c/cara-ovalada-cortes-de-cabello.jpg?itok=xonSYCXk",
-    "ocupacion": "Desarrolladora Full Stack",
+    "ocupacion": "Full Stack Developer Jr.",
     "ciudad": "Rosario",
     "pais": "Argentina",
     "acercaDe": "Estudiante de Programación FullStack, Relacionista Pública, Ceremonialista y Organizadora de Eventos. Emprendedora y mamá de dos bellos pichones.",
@@ -57,10 +57,12 @@
     "proyectos": [{
         "titulo": "Mi Portfolio.",
         "descripcion": "Mi presentación al mundo como desarrolladora FullStack .Trabajo final integrador del Plan Argentina Programa.",
+        "fechaRealizacion": "2022",
         "proyectoUrl": "https://thumbs.dreamstime.com/b/palabra-creativa-de-la-cartera-sobre-bandera-geom%C3%A9trica-abstracta-del-web-fondo-las-formas-110176284.jpg"
     }, {
         "titulo": " Sistema de gestión de Actividades Infantiles",
         "descripcion": "Programa web para que las madres puedan gestionar integralmente las actividades de sus hijos.",
+        "fechaRealizacion": "2028",
         "proyectoUrl": "https://www.disfrutarosario.com/agenda-actividades-para-el-fin-de-semana-en-rosario/"
     }]
 
