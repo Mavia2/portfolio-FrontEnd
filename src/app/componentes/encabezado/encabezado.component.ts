@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 declare var window: any;
 
 
@@ -19,7 +20,7 @@ export class EncabezadoComponent implements OnInit {
 
   @Input() estaLogueado: boolean = false;
 
-  constructor(private datosPorfolio:PorfolioService, private formBuilder:FormBuilder) {
+  constructor(private datosPorfolio:PorfolioService, private formBuilder:FormBuilder, private router: Router) {
     this.form=this.formBuilder.group(
       {
         nombre:['',[Validators.required]],
@@ -79,6 +80,10 @@ export class EncabezadoComponent implements OnInit {
     this.miPortfolio.email = this.email?.value
     // guardar cambios en base de datos -> pegarle al endpot de update nombre y apellido
     this.formInfoContacto.hide();
+  }
+
+  goToLogin() {
+    this.router.navigate(['/', 'iniciar-sesion']);
   }
 
   get apellido()
