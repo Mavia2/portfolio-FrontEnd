@@ -3,6 +3,8 @@ import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
+import { Observable } from 'rxjs';
 declare var window: any;
 
 
@@ -18,9 +20,9 @@ export class EncabezadoComponent implements OnInit {
   form:FormGroup;
   formInfoContacto: any;
 
-  @Input() estaLogueado: boolean = false;
+  @Input() estaLogueado: Observable<boolean>;
 
-  constructor(private datosPorfolio:PorfolioService, private formBuilder:FormBuilder, private router: Router) {
+  constructor(private datosPorfolio:PorfolioService, private formBuilder:FormBuilder, private router: Router, private autenticacionService:AutenticacionService) {
     this.form=this.formBuilder.group(
       {
         nombre:['',[Validators.required]],
@@ -53,6 +55,10 @@ export class EncabezadoComponent implements OnInit {
       document.getElementById('infoContacto')
     );
 
+  }
+
+  logout(){
+    this.autenticacionService.logout()
   }
 
   openFormModal() {

@@ -6,7 +6,7 @@
         </div>
         <div class="col-2 d-flex justify-content-end">
 
-            <button class="btn" (click)="openFormModal()" *ngIf="estaLogueado">
+            <button class="btn" (click)="openFormModal()" *ngIf="(estaLogueado | async)">
                 <span class="icono">
                 <fa-icon [icon]="editIcon" size="lg"></fa-icon>
               </span>

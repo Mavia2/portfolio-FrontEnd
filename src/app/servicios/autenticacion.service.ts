@@ -11,28 +11,46 @@ import  {map} from 'rxjs/operators';
 export class AutenticacionService {
   url="http://localhost:4200/iniciar-sesion";
   currentUserSubject:BehaviorSubject<any>;
+  isLoginSubject: BehaviorSubject<boolean>;
 
   constructor(private http:HttpClient) {
     console.log("El servicio de autenticación está corriendo");
-    this.currentUserSubject= new BehaviorSubject<any>(JSON.parse(sessionStorage.getItem('currentUser')|| '{}'))
+    this.currentUserSubject= new BehaviorSubject<any>(JSON.parse(sessionStorage.getItem('currentUser')|| '{}'));
+    this.isLoginSubject = new BehaviorSubject<boolean>(this.hasToken());
    }
 
    IniciarSesion(credenciales:any):Observable<any>
    {
+    sessionStorage.setItem('token', 'JWT');
+    this.isLoginSubject.next(true);
+
     return this.http.post(this.url, credenciales).pipe(map(data=>{
       sessionStorage.setItem('currentUser', JSON.stringify(data));
       this.currentUserSubject.next(data);
+      sessionStorage.setItem('token', 'JWT');
+      this.isLoginSubject.next(true);
       return data;
     }))
    }
+
+   private hasToken() : boolean {
+    return !!localStorage.getItem('token');
+  }
 
    get usuarioAutenticado()
    {
     return this.currentUserSubject.value;
    }
 
-   get estaLogueado():boolean {
-    return this.currentUserSubject.value && this.currentUserSubject.value.accessToken;
+   logout(){
+    sessionStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+    localStorage.removeItem('token');
+    this.isLoginSubject.next(false);
+   }
+
+   get estaLogueado(): Observable<boolean>{
+    return this.isLoginSubject.asObservable();
    }
 
 }

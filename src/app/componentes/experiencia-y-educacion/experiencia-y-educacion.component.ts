@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import { faPen, faPlusCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 declare var window: any;
 
 @Component({
@@ -28,7 +29,7 @@ export class ExperienciaYEducacionComponent implements OnInit {
   eliminarTipo: string;
 
 
-  @Input() estaLogueado: boolean = false;
+  @Input() estaLogueado: Observable<boolean>;
 
   constructor(private datosPorfolio:PorfolioService, private formBuilder:FormBuilder ) {
     this.form=this.formBuilder.group(

@@ -31,8 +31,11 @@
             </a>
         </li>
         <li class="nav-item logo">
-            <button type="button" class="btn btn-primary btn-sm" (click)="goToLogin()">
+            <button type="button" class="btn btn-primary btn-sm" (click)="goToLogin()" *ngIf="!(estaLogueado | async)">
               Login
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="logout()" *ngIf="(estaLogueado | async)">
+              Logout
             </button>
         </li>
     </ul>
@@ -46,25 +49,23 @@
         <div class="bannerContainer">
             <img class="imagenArriba" [src]="miPortfolio?.imagenHeader">
             <span class="iconoBanner">
-              <button class="btn">
+              <button class="btn" *ngIf="(estaLogueado | async)">
               <fa-icon [icon]="editIcon" size="lg"></fa-icon>
             </button>
             </span>
         </div>
         <div class="imgPerfilContainer">
             <img [src]="miPortfolio?.imagenPerfil" class="rounded-circle imgCirculoPerfil" width="150 " height="150 ">
-            <a href="./assets/imagenes/marce1.jpg" class="justify-content-end mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                <span class="icono">
+            <button class="btn" *ngIf="(estaLogueado | async)">
                 <fa-icon [icon]="editIcon" size="lg"></fa-icon>
-              </span>
-            </a>
+              </button>
         </div>
         <div class="infoData">
             <div class="row">
                 <div class=" col-8">
                     <div class="nombreContainer">
                         <h1 class="nombreCompleto">{{miPortfolio?.nombre}} {{miPortfolio?.apellido}}</h1>
-                        <button class="btn" (click)="openFormModal()" *ngIf="estaLogueado">
+                        <button class="btn" (click)="openFormModal()" *ngIf="(estaLogueado | async)">
                             <span class="icono">
                               <fa-icon [icon]="editIcon" size="lg"></fa-icon>
                             </span>
@@ -160,8 +161,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="estaLogueado">Editar Información de Contacto:</h5>
-                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="!estaLogueado">Información de Contacto:</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="(estaLogueado | async)">Editar Información de Contacto:</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" *ngIf="!(estaLogueado | async)">Información de Contacto:</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form [formGroup]="form" (ngSubmit)="saveInfoContacto($event)">
@@ -177,7 +178,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input formControlName="email" class="form-control" id="email" aria-describedby="emailHelp" [readonly]='!estaLogueado'>
+                            <input formControlName="email" class="form-control" id="email" aria-describedby="emailHelp" [readonly]='!(estaLogueado | async)'>
                             <div *ngIf="email?.errors && email?.touched">
                                 <p *ngIf="email?.hasError('required')" class="text-danger">
                                     El email es requerido.

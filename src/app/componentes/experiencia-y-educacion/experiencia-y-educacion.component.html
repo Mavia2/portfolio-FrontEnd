@@ -5,7 +5,7 @@
             Experiencia
         </div>
         <div class="col-2 d-flex justify-content-end">
-            <button class="btn" (click)="openFormModal('crear')" *ngIf="estaLogueado">
+            <button class="btn" (click)="openFormModal('crear')" *ngIf="(estaLogueado | async)">
                 <span class="icono">
                   <fa-icon [icon]="addIcon" size="lg"></fa-icon>
                 </span>
@@ -26,12 +26,12 @@
                 </div>
                 <div>
                     <div class="nav nav-pills ">
-                        <button class="btn" (click)="openFormModal('edit',  indexOfelement)" *ngIf="estaLogueado">
+                        <button class="btn" (click)="openFormModal('edit',  indexOfelement)" *ngIf="(estaLogueado | async)">
                             <span class="icono">
                             <fa-icon [icon]="editIcon" size="lg"></fa-icon>
                           </span>
                         </button>
-                        <button class="btn" (click)="openEliminar('experiencia',  indexOfelement)" *ngIf="estaLogueado">
+                        <button class="btn" (click)="openEliminar('experiencia',  indexOfelement)" *ngIf="(estaLogueado | async)">
                             <span class="icono">
                             <fa-icon [icon]="deleteIcon" size="lg"></fa-icon>
                           </span>
@@ -53,7 +53,7 @@
             Educación
         </div>
         <div class="col-2 d-flex justify-content-end">
-            <button class="btn" (click)="openFormModalEducacion('crear')" *ngIf="estaLogueado">
+            <button class="btn" (click)="openFormModalEducacion('crear')" *ngIf="(estaLogueado | async)">
                 <span class="icono">
                   <fa-icon [icon]="addIcon" size="lg"></fa-icon>
                 </span>
@@ -73,12 +73,12 @@
                 </div>
                 <div>
                     <div class="nav nav-pills ">
-                        <button class="btn" (click)="openFormModalEducacion('edit',  indexOfelement)" *ngIf="estaLogueado">
+                        <button class="btn" (click)="openFormModalEducacion('edit',  indexOfelement)" *ngIf="(estaLogueado | async)">
                             <span class="icono">
                               <fa-icon [icon]="editIcon" size="lg"></fa-icon>
                             </span>
                         </button>
-                        <button class="btn" (click)="openEliminar('educacion',  indexOfelement)" *ngIf="estaLogueado">
+                        <button class="btn" (click)="openEliminar('educacion',  indexOfelement)" *ngIf="(estaLogueado | async)">
                         <span class="icono">
                               <fa-icon [icon]="deleteIcon" size="lg"></fa-icon>
                             </span>

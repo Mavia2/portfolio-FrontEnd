@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 declare var window: any;
 
 @Component({
@@ -15,7 +16,7 @@ export class AcercaDeComponent implements OnInit {
   formModal: any;
   form:FormGroup;
 
-  @Input() estaLogueado: boolean = false;
+  @Input() estaLogueado: Observable<boolean>;
 
 
   constructor(private datosPorfolio:PorfolioService, private formBuilder:FormBuilder) {

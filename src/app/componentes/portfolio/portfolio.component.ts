@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { AutenticacionService } from '../../servicios/autenticacion.service';
 
 @Component({
@@ -7,14 +8,16 @@ import { AutenticacionService } from '../../servicios/autenticacion.service';
   styleUrls: ['./portfolio.component.css']
 })
 export class PortfolioComponent implements OnInit {
-  estaLogueado: boolean;
+  estaLogueado: Observable<boolean>;
 
-  constructor(private autenticacionServicio: AutenticacionService) { }
+  constructor(private autenticacionServicio: AutenticacionService) {
+    this.estaLogueado = autenticacionServicio.estaLogueado;
+  }
 
   ngOnInit(): void {
 
-        // this.estaLogueado = this.autenticacionServicio.estaLogueado;
-        this.estaLogueado = true;
+        //this.estaLogueado = this.autenticacionServicio.estaLogueado;
+        //this.estaLogueado = true;
 
   }
 
