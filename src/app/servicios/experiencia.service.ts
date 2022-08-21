@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Experiencia } from '../model/experiencia';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PorfolioService {
+export class SExperienciaService {
   expURL = '/experiencia'
   baseURL = environment.baseUrl;
 
@@ -24,12 +26,5 @@ export class PorfolioService {
   }
   public delete (id: number): Observable<any>{
     return this.httpClient.delete<any>(this.baseURL + `/delete`+ this.expURL + `/${id}`);
-  }
-
-
-
-  obtenerDatos():Observable<any>{
-    return this.http.get('../../assets/data/data.json');
-
   }
 }

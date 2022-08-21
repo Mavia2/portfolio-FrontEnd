@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable}from 'rxjs';
 import  {map} from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -9,7 +10,7 @@ import  {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AutenticacionService {
-  url="http://localhost:4200/iniciar-sesion";
+  url=`${environment.baseUrl}/login`;
   currentUserSubject:BehaviorSubject<any>;
   isLoginSubject: BehaviorSubject<boolean>;
 
@@ -21,13 +22,13 @@ export class AutenticacionService {
 
    IniciarSesion(credenciales:any):Observable<any>
    {
-    sessionStorage.setItem('token', 'JWT');
-    this.isLoginSubject.next(true);
+    //sessionStorage.setItem('token', 'JWT');
+    //this.isLoginSubject.next(true);
 
     return this.http.post(this.url, credenciales).pipe(map(data=>{
       sessionStorage.setItem('currentUser', JSON.stringify(data));
       this.currentUserSubject.next(data);
-      sessionStorage.setItem('token', 'JWT');
+      sessionStorage.setItem('token', JSON.stringify(data));
       this.isLoginSubject.next(true);
       return data;
     }))

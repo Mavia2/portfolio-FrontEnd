@@ -2,12 +2,12 @@
 <form [formGroup]="form" class="m-5" (ngSubmit)="onEnviar($event)">
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Email</label>
-        <input type="email" formControlName="email" [ngClass]="{'is-invalid': Email?.errors && Email?.touched, 'is-valid': !Email?.errors && Email?.touched }" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <div *ngIf="Email?.errors && Email?.touched">
-            <p *ngIf="Email?.hasError('required')" class="text-danger">
+        <input type="email" formControlName="username" [ngClass]="{'is-invalid': Username?.errors && Username?.touched, 'is-valid': !Username?.errors && Username?.touched }" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <div *ngIf="Username?.errors && Username?.touched">
+            <p *ngIf="Username?.hasError('required')" class="text-danger">
                 El email es requerido.
             </p>
-            <p *ngIf="Email?.hasError('email')" class="text-danger">
+            <p *ngIf="Username?.hasError('email')" class="text-danger">
                 El formato del email debe ser válido.
             </p>
         </div>

@@ -14,6 +14,7 @@ import { IniciarSesionComponent } from './componentes/iniciar-sesion/iniciar-ses
 import { PortfolioComponent } from './componentes/portfolio/portfolio.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InterceptorService } from './servicios/interceptor.service';
+import { AutenticacionService } from './servicios/autenticacion.service';
 import { PorfolioService } from './servicios/porfolio.service';
 
 
@@ -36,12 +37,13 @@ import { PorfolioService } from './servicios/porfolio.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     FontAwesomeModule,
     ReactiveFormsModule
 
   ],
 
-  providers: [PorfolioService,
+  providers: [PorfolioService, AutenticacionService,
     {provide:HTTP_INTERCEPTORS, useClass:InterceptorService, multi:true}
   ],
 
