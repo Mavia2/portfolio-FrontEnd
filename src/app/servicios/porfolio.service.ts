@@ -1,35 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Persona } from '../model/persona';
+import { Portfolio } from '../model/portfolio';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PorfolioService {
-  expURL = '/experiencia'
+  expURL = '/persona'
   baseURL = environment.baseUrl;
 
   constructor(private httpClient : HttpClient) { }
-  public lista(): Observable<Experiencia[]>{
-    return this.httpClient.get<Experiencia[]>(this.baseURL + `/get` + this.expURL);
+  public lista(): Observable<Portfolio[]>{
+    return this.httpClient.get<Portfolio[]>(this.baseURL + `/get` + this.expURL);
   }
-  public detail (id:number): Observable<Experiencia>{
-    return this.httpClient.get<Experiencia>(this.baseURL + `/get`+ this.expURL + `/${id}`);
-  }
-  public save (experiencia : Experiencia): Observable<any>{
-    return this.httpClient.post<any>(this.baseURL + `/new` + this.expURL, experiencia);
-  }
-  public update (id:number, experiencia : Experiencia): Observable<any>{
-    return this.httpClient.put<any>(this.baseURL + `/update` + this.expURL + `/${id}` , experiencia);
-  }
-  public delete (id: number): Observable<any>{
-    return this.httpClient.delete<any>(this.baseURL + `/delete`+ this.expURL + `/${id}`);
-  }
-
-
-
-  obtenerDatos():Observable<any>{
-    return this.http.get('../../assets/data/data.json');
-
+  public detail (id:number): Observable<Portfolio>{
+    return this.httpClient.get<Portfolio>(this.baseURL + `/get`+ this.expURL + `/${id}`);
   }
 }

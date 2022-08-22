@@ -27,7 +27,7 @@ export class SkillsComponent implements OnInit {
   @Input() estaLogueado: Observable<boolean>;
 
 
-  constructor(private datosPorfolio:PorfolioService, private formBuilder:FormBuilder) {
+  constructor(private datosPortfolio:PorfolioService, private formBuilder:FormBuilder) {
     this.form=this.formBuilder.group(
       {
         nombre:['',[Validators.required]],
@@ -40,7 +40,7 @@ export class SkillsComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.datosPorfolio.obtenerDatos().subscribe(data => {
+    this.datosPortfolio.detail(1).subscribe(data => {
       this.skillsList=data.skills;
 
     });

@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { Observable } from 'rxjs';
+import { PersonaService } from 'src/app/servicios/persona.service';
 declare var window: any;
 
 
@@ -22,7 +23,7 @@ export class EncabezadoComponent implements OnInit {
 
   @Input() estaLogueado: Observable<boolean>;
 
-  constructor(private datosPorfolio:PorfolioService, private formBuilder:FormBuilder, private router: Router, private autenticacionService:AutenticacionService) {
+  constructor(private personaService: PersonaService, private datosPorfolio:PorfolioService, private formBuilder:FormBuilder, private router: Router, private autenticacionService:AutenticacionService) {
     this.form=this.formBuilder.group(
       {
         nombre:['',[Validators.required]],
@@ -37,7 +38,7 @@ export class EncabezadoComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.datosPorfolio.obtenerDatos().subscribe(data => {
+    this.datosPorfolio.detail(1).subscribe(data => {
       this.miPortfolio=data;
       this.nombre?.setValue(this.miPortfolio.nombre);
       this.apellido?.setValue(this.miPortfolio.apellido);
@@ -75,7 +76,10 @@ export class EncabezadoComponent implements OnInit {
     this.miPortfolio.ocupacion = this.ocupacion?.value
     this.miPortfolio.ciudad = this.ciudad?.value
     this.miPortfolio.pais = this.pais?.value
-
+    console.log("ENCABEZADO", this.miPortfolio);
+    this.personaService.update(1,{nombre: this.miPortfolio.nombre} ).subscribe(data=>{
+      console.log("UPDATE ENCABEZADO");
+    });
 
     // guardar cambios en base de datos -> pegarle al endpot de update nombre y apellido
     this.formModal.hide();

@@ -11,15 +11,18 @@ export class InterceptorService implements HttpInterceptor {
   constructor(private autenticacionServicio:AutenticacionService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     var currentUser=this.autenticacionServicio.usuarioAutenticado;
-    if(currentUser && currentUser.accessToken)
+    if(currentUser && currentUser.jwtToken)
     {
       req:req.clone({
         setHeaders:{
-          Authorization: `Bearer ${currentUser.accessToken}`
+          'Content-Type': 'application/json; charset=utf-8',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${currentUser.jwtToken}`
         }
       })
+      console.log("Interceptor está corriendo" + JSON.stringify(currentUser));
     }
-    console.log("Interceptor está corriendo" + JSON.stringify(currentUser));
+
   return next.handle(req);
 
   }

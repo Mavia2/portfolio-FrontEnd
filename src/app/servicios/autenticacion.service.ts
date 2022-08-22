@@ -28,14 +28,13 @@ export class AutenticacionService {
     return this.http.post(this.url, credenciales).pipe(map(data=>{
       sessionStorage.setItem('currentUser', JSON.stringify(data));
       this.currentUserSubject.next(data);
-      sessionStorage.setItem('token', JSON.stringify(data));
       this.isLoginSubject.next(true);
       return data;
     }))
    }
 
    private hasToken() : boolean {
-    return !!localStorage.getItem('token');
+    return !!sessionStorage.getItem('currentUser');
   }
 
    get usuarioAutenticado()
@@ -46,7 +45,6 @@ export class AutenticacionService {
    logout(){
     sessionStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    localStorage.removeItem('token');
     this.isLoginSubject.next(false);
    }
 

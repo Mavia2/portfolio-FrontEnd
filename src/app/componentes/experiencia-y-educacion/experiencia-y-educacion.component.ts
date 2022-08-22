@@ -56,9 +56,9 @@ export class ExperienciaYEducacionComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.datosPorfolio.obtenerDatos().subscribe(data=>{
-      this.educacionList=data.educacion;
-      this.experienciaList=data.experiencia;
+    this.datosPorfolio.detail(1).subscribe(data=>{
+      this.educacionList=data.educaciones;
+      this.experienciaList=data.experiencias;
     });
 
     this.formModal = new window.bootstrap.Modal(

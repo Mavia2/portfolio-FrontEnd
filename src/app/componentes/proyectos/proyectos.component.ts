@@ -41,7 +41,7 @@ export class ProyectosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.datosPorfolio.obtenerDatos().subscribe(data=>{
+    this.datosPorfolio.detail(1).subscribe(data=>{
       this.proyectosList=data.proyectos;
 
 

@@ -15,7 +15,7 @@ import { PortfolioComponent } from './componentes/portfolio/portfolio.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InterceptorService } from './servicios/interceptor.service';
 import { AutenticacionService } from './servicios/autenticacion.service';
-import { PorfolioService } from './servicios/porfolio.service';
+import { PersonaService } from './servicios/persona.service';
 
 
 
@@ -43,7 +43,7 @@ import { PorfolioService } from './servicios/porfolio.service';
 
   ],
 
-  providers: [PorfolioService, AutenticacionService,
+  providers: [ AutenticacionService,
     {provide:HTTP_INTERCEPTORS, useClass:InterceptorService, multi:true}
   ],
 

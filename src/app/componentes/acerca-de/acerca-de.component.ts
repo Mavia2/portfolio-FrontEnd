@@ -29,7 +29,7 @@ export class AcercaDeComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.datosPorfolio.obtenerDatos().subscribe(data => {
+    this.datosPorfolio.detail(1).subscribe(data => {
       this.acercaDe=data.acercaDe;
       this.acercaDeForm?.setValue(this.acercaDe);
     });
