@@ -169,7 +169,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="celular" class="form-label">Celular</label>
-                            <input formControlName="celular" class="form-control" id="nombre" aria-describedby="celularHelp">
+                            <input formControlName="celular" class="form-control" id="nombre" aria-describedby="celularHelp" [readonly]='!(estaLogueado | async)'>
                             <div *ngIf="form.get('celular')?.errors && form.get('celular')?.touched">
                                 <p *ngIf="form.get('celular')?.hasError('required')" class="text-danger">
                                     El número de celular es requerido.
@@ -192,7 +192,7 @@
 
 
                     </div>
-                    <div class="modal-footer" *ngIf="estaLogueado">
+                    <div class="modal-footer"  *ngIf="(estaLogueado | async)">
                         <button type="submit" class="btn btn-primary">
                     Guardar Cambios
                   </button>

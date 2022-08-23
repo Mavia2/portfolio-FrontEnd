@@ -76,9 +76,15 @@ export class EncabezadoComponent implements OnInit {
     this.miPortfolio.ocupacion = this.ocupacion?.value
     this.miPortfolio.ciudad = this.ciudad?.value
     this.miPortfolio.pais = this.pais?.value
-    console.log("ENCABEZADO", this.miPortfolio);
-    this.personaService.update(1,{nombre: this.miPortfolio.nombre} ).subscribe(data=>{
-      console.log("UPDATE ENCABEZADO");
+
+    this.personaService.update(1,{
+      nombre: this.miPortfolio.nombre,
+      apellido: this.miPortfolio.apellido,
+      ocupacion: this.miPortfolio.ocupacion,
+      ciudad: this.miPortfolio.ciudad,
+      pais: this.miPortfolio.pais,
+     } ).subscribe(data=>{
+      console.log("UPDATE ENCABEZADO", data);
     });
 
     // guardar cambios en base de datos -> pegarle al endpot de update nombre y apellido
