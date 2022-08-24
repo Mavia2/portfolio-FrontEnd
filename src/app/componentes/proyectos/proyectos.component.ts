@@ -3,6 +3,8 @@ import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import { faPen, faPlusCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { ProyectoService } from 'src/app/servicios/proyecto.service';
+import { ToastrService } from 'ngx-toastr';
 declare var window: any;
 
 @Component({
@@ -27,14 +29,15 @@ export class ProyectosComponent implements OnInit {
   @Input() estaLogueado: Observable<boolean>;
 
 
-  constructor(private datosPorfolio:PorfolioService, private formBuilder:FormBuilder) {
+  constructor(private toastr: ToastrService, private proyectoService: ProyectoService, private datosPorfolio:PorfolioService, private formBuilder:FormBuilder) {
     this.form=this.formBuilder.group(
       {
+        id:['',[Validators.required]],
         titulo:['',[Validators.required]],
         descripcion:['',[Validators.required]],
         fechaRealizacion:['',[Validators.required]],
         proyectoUrl:['',[Validators.required]],
-
+        idPersona:['',[Validators.required]],
       }
     )
 
@@ -43,8 +46,6 @@ export class ProyectosComponent implements OnInit {
   ngOnInit(): void {
     this.datosPorfolio.detail(1).subscribe(data=>{
       this.proyectosList=data.proyectos;
-
-
     });
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('modalProyectos')
@@ -76,21 +77,68 @@ export class ProyectosComponent implements OnInit {
     console.log('TEST')
   }
 
+  showSuccess() {
+    this.toastr.success('Las modificaciones se realizaron con éxito.');
+  }
+
+  showError() {
+    this.toastr.error('Error al realizar las modificaciones, por favor pruebe nuevamente en unos minutos.');
+  }
+
+
   save(event: Event, esEditar: boolean, index?: any) {
     event.preventDefault
     if (esEditar) {
-      this.proyectosList[index] = this.form.value
-    // guardar cambios en base de datos -> pegarle al endpot de update experiencia
+      this.proyectoService.update(this.proyectosList[index].id,{
+        titulo: this.form.value.titulo,
+        descripcion: this.form.value.descripcion,
+        fechaRealizacion: this.form.value.fechaRealizacion,
+        proyectoUrl: this.form.value.proyectoUrl,
+        idPersona: 1
+      } ).subscribe({
+        next: (data) => {
+          console.log("DATA PROYECTO", data)
+          this.ngOnInit();
+          this.showSuccess();
+        },
+        error: (e) =>{
+          this.showError();
+        },
+        complete: () => console.info('complete')
+    });
     } else {
-      this.proyectosList.unshift(this.form.value);
-      // agregar experiencia en base de datos -> pegarle al endpot de crear experiencia
+      const payLoad = {
+        titulo: this.form.value.titulo,
+        descripcion: this.form.value.descripcion,
+        fechaRealizacion: this.form.value.fechaRealizacion,
+        proyectoUrl: this.form.value.proyectoUrl,
+        idPersona: 1
+      }
+      this.proyectoService.save(payLoad).subscribe({
+        next: (data) => {
+          console.log("DATA PROYECTO",data);
+          this.ngOnInit();
+          this.showSuccess();
+        },
+        error: (e) => {
+          this.showError();
+          this.ngOnInit();
+        },
+        complete: () => console.info('complete')
+    });
     }
     this.formModal.hide();
   }
 
   eliminar(){
-    delete this.proyectosList[this.eliminarIndex];
-    // endpoint delete
+    this.proyectoService.delete(this.proyectosList[this.eliminarIndex].id).subscribe({
+      next: (data) => {
+        this.showSuccess();
+        this.ngOnInit();
+      },
+      error: (e) => this.showError(),
+      complete: () => console.info('complete')
+    });
     this.formModalEliminar.hide();
   }
 

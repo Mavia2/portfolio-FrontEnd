@@ -70,7 +70,6 @@ export class SkillsComponent implements OnInit {
   openEliminar( index: any){
     this.tituloEliminar = 'Eliminar skills';
     this.mensajeEliminar = `Esta seguro que desea eliminar  ${this.skillsList[index].nombre}?`
-    // endpoint delete
     this.eliminarIndex = index
     this.formModalEliminar.show();
   }
@@ -94,7 +93,6 @@ export class SkillsComponent implements OnInit {
         complete: () => console.info('complete')
     });
     } else {
-      this.skillsList.unshift(this.form.value);
       const payLoad = {
         nombre: this.form.value.nombre,
         porcentaje: this.form.value.porcentaje,
