@@ -66,6 +66,7 @@ export class ExperienciaYEducacionComponent implements OnInit {
   ngOnInit(): void {
     this.datosPorfolio.detail(1).subscribe(data=>{
       this.educacionList=data.educaciones;
+      //this.educacionList.sort((a: Educacion,b: Educacion)=>{a.fechaFin - b.fechaFin})
       this.experienciaList=data.experiencias;
     });
 
@@ -133,8 +134,14 @@ export class ExperienciaYEducacionComponent implements OnInit {
         complete: () => console.info('complete')
     });
     } else {
-      delete this.experienciaList[this.eliminarIndex];
-      // endpoint delete
+      this.experienciaService.delete(this.experienciaList[this.eliminarIndex].id).subscribe({
+        next: (data) => {
+          this.showSuccess();
+          this.ngOnInit();
+        },
+        error: (e) => this.showError(),
+        complete: () => console.info('complete')
+      });
     }
     this.formModalEliminar.hide();
   }
@@ -143,10 +150,43 @@ export class ExperienciaYEducacionComponent implements OnInit {
     event.preventDefault
     if (esEditar) {
       this.experienciaList[index] = this.form.value
-    // guardar cambios en base de datos -> pegarle al endpot de update experiencia
+      this.experienciaService.update(this.experienciaList[index].id,{
+        fotoUrl: this.experienciaList[index].fotoUrl,
+        institucion: this.experienciaList[index].institucion,
+        fechaInicio: this.experienciaList[index].fechaInicio,
+        fechaFin: this.experienciaList[index].fechaFin,
+        lugar: this.experienciaList[index].lugar,
+        cargo: this.experienciaList[index].cargo,
+        descripcion: this.experienciaList[index].descripcion,
+        idPersona: 1
+      } ).subscribe({
+        next: (v) => this.showSuccess(),
+        error: (e) => this.showError(),
+        complete: () => console.info('complete')
+    });
     } else {
-      this.experienciaList.unshift(this.form.value);
-      // agregar experiencia en base de datos -> pegarle al endpot de crear experiencia
+      const payLoad = {
+        fotoUrl: this.form.value.fotoUrl,
+        institucion: this.form.value.institucion,
+        fechaInicio: this.form.value.fechaInicio,
+        fechaFin: this.form.value.fechaFin,
+        lugar: this.form.value.lugar,
+        cargo: this.form.value.cargo,
+        descripcion: this.form.value.descripcion,
+        idPersona: 1,
+      }
+      this.experienciaService.save(payLoad).subscribe({
+        next: (data) => {
+          console.log("DATA EXPERIENCIA",data);
+          this.ngOnInit();
+          this.showSuccess();
+        },
+        error: (e) => {
+          this.showError();
+          this.ngOnInit();
+        },
+        complete: () => console.info('complete')
+    });
     }
     this.formModal.hide();
   }
@@ -177,7 +217,6 @@ export class ExperienciaYEducacionComponent implements OnInit {
         complete: () => console.info('complete')
     });
     } else {
-      this.educacionList.unshift(this.formEducacion.value);
       this.educacionService.save({
         fotoUrl: this.educacionList[index].fotoUrl,
         institucion: this.educacionList[index].institucion,
@@ -188,9 +227,9 @@ export class ExperienciaYEducacionComponent implements OnInit {
         idPersona: 1,
       } ).subscribe({
         next: (data) => {
-          this.educacionList[index] = data
+          console.log("DATA EDUCACION", data)
+          this.ngOnInit();
           this.showSuccess();
-
         },
         error: (e) => this.showError(),
         complete: () => console.info('complete')
