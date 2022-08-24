@@ -112,7 +112,7 @@ export class ExperienciaYEducacionComponent implements OnInit {
     this.eliminarTipo = tipo
     if (tipo == 'educacion') {
       this.tituloEliminar = 'Eliminar Educacion';
-      this.mensajeEliminar = `Esta seguro que desea eliminar esta ${this.educacionList[index].institucion}`
+      this.mensajeEliminar = `Esta seguro que desea eliminar: ${this.educacionList[index].institucion}`
       // endpoint delete
     } else {
       this.tituloEliminar = 'Eliminar experiencia';
@@ -217,15 +217,16 @@ export class ExperienciaYEducacionComponent implements OnInit {
         complete: () => console.info('complete')
     });
     } else {
-      this.educacionService.save({
-        fotoUrl: this.educacionList[index].fotoUrl,
-        institucion: this.educacionList[index].institucion,
-        titulo: this.educacionList[index].titulo,
-        fechaInicio:this.educacionList[index].fechaInicio,
-        fechaFin: this.educacionList[index].fechaFin,
-        lugar: this.educacionList[index].lugar,
+      const payload = {
+        fotoUrl: this.formEducacion.value.fotoUrl,
+        institucion: this.formEducacion.value.institucion,
+        titulo: this.formEducacion.value.titulo,
+        fechaInicio:this.formEducacion.value.fechaInicio,
+        fechaFin: this.formEducacion.value.fechaFin,
+        lugar: this.formEducacion.value.lugar,
         idPersona: 1,
-      } ).subscribe({
+      }
+      this.educacionService.save(payload).subscribe({
         next: (data) => {
           console.log("DATA EDUCACION", data)
           this.ngOnInit();

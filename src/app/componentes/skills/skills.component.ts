@@ -3,6 +3,8 @@ import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import { faPen, faPlusCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { SkillService } from 'src/app/servicios/skill.service';
+import { ToastrService } from 'ngx-toastr';
 declare var window: any;
 
 @Component({
@@ -27,16 +29,16 @@ export class SkillsComponent implements OnInit {
   @Input() estaLogueado: Observable<boolean>;
 
 
-  constructor(private datosPortfolio:PorfolioService, private formBuilder:FormBuilder) {
+  constructor(private toastr: ToastrService, private skillService: SkillService, private datosPortfolio:PorfolioService, private formBuilder:FormBuilder) {
     this.form=this.formBuilder.group(
       {
+        id:['',[Validators.required]],
         nombre:['',[Validators.required]],
         porcentaje:['',[Validators.required]],
+        idPersona:['',[Validators.required]],
 
       }
     )
-
-
    }
 
   ngOnInit(): void {
@@ -76,18 +78,62 @@ export class SkillsComponent implements OnInit {
   save(event: Event, esEditar: boolean, index?: any) {
     event.preventDefault
     if (esEditar) {
-      this.skillsList[index] = this.form.value
-    // guardar cambios en base de datos -> pegarle al endpot de update experiencia
+      this.skillService.update(this.skillsList[index].id,{
+        nombre: this.form.value.nombre,
+        porcentaje: this.form.value.porcentaje,
+        idPersona: 1
+      } ).subscribe({
+        next: (data) => {
+          console.log("DATA SKILL", data)
+          this.ngOnInit();
+          this.showSuccess();
+        },
+        error: (e) =>{
+          this.showError();
+        },
+        complete: () => console.info('complete')
+    });
     } else {
       this.skillsList.unshift(this.form.value);
-      // agregar experiencia en base de datos -> pegarle al endpot de crear experiencia
+      const payLoad = {
+        nombre: this.form.value.nombre,
+        porcentaje: this.form.value.porcentaje,
+        idPersona: 1,
+      }
+      this.skillService.save(payLoad).subscribe({
+        next: (data) => {
+          console.log("DATA EXPERIENCIA",data);
+          this.ngOnInit();
+          this.showSuccess();
+        },
+        error: (e) => {
+          this.showError();
+          this.ngOnInit();
+        },
+        complete: () => console.info('complete')
+    });
     }
     this.formModal.hide();
   }
 
+  showSuccess() {
+    this.toastr.success('Las modificaciones se realizaron con éxito.');
+  }
+
+  showError() {
+    this.toastr.error('Error al realizar las modificaciones, por favor pruebe nuevamente en unos minutos.');
+  }
+
+
   eliminar(){
-    delete this.skillsList[this.eliminarIndex];
-    // endpoint delete
+       this.skillService.delete(this.skillsList[this.eliminarIndex].id).subscribe({
+      next: (data) => {
+        this.showSuccess();
+        this.ngOnInit();
+      },
+      error: (e) => this.showError(),
+      complete: () => console.info('complete')
+    });
     this.formModalEliminar.hide();
   }
 
