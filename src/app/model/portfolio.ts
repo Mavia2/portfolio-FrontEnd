@@ -1,4 +1,4 @@
-import { Educacion } from "./Educacion";
+import { Educacion } from "./educacion";
 import { Experiencia } from "./experiencia";
 import { Persona } from "./persona";
 import { Proyecto } from "./proyecto";

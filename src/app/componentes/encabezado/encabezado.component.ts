@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { Observable } from 'rxjs';
 import { PersonaService } from 'src/app/servicios/persona.service';
+import { ToastrService } from 'ngx-toastr';
 declare var window: any;
 
 
@@ -23,7 +24,7 @@ export class EncabezadoComponent implements OnInit {
 
   @Input() estaLogueado: Observable<boolean>;
 
-  constructor(private personaService: PersonaService, private datosPorfolio:PorfolioService, private formBuilder:FormBuilder, private router: Router, private autenticacionService:AutenticacionService) {
+  constructor(private toastr: ToastrService, private personaService: PersonaService, private datosPorfolio:PorfolioService, private formBuilder:FormBuilder, private router: Router, private autenticacionService:AutenticacionService) {
     this.form=this.formBuilder.group(
       {
         nombre:['',[Validators.required]],
@@ -84,16 +85,27 @@ export class EncabezadoComponent implements OnInit {
       ciudad: this.miPortfolio.ciudad,
       pais: this.miPortfolio.pais,
      } ).subscribe(data=>{
-      console.log("UPDATE ENCABEZADO", data);
+          this.showSuccess();
     });
 
     // guardar cambios en base de datos -> pegarle al endpot de update nombre y apellido
     this.formModal.hide();
   }
 
+  showSuccess() {
+    this.toastr.success('Las modificacions se realizaron con exito');
+  }
+
   saveInfoContacto(event: Event){
     this.miPortfolio.celular = this.celular?.value
     this.miPortfolio.email = this.email?.value
+
+    this.personaService.update(1,{
+      celular: this.miPortfolio.celular,
+      email: this.miPortfolio.email,
+     } ).subscribe(data=>{
+          this.showSuccess();
+    });
     // guardar cambios en base de datos -> pegarle al endpot de update nombre y apellido
     this.formInfoContacto.hide();
   }

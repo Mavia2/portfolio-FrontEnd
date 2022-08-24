@@ -3,6 +3,8 @@ import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { PersonaService } from 'src/app/servicios/persona.service';
 declare var window: any;
 
 @Component({
@@ -19,7 +21,7 @@ export class AcercaDeComponent implements OnInit {
   @Input() estaLogueado: Observable<boolean>;
 
 
-  constructor(private datosPorfolio:PorfolioService, private formBuilder:FormBuilder) {
+  constructor(private toastr: ToastrService, private personaService: PersonaService, private datosPorfolio:PorfolioService, private formBuilder:FormBuilder) {
     this.form=this.formBuilder.group(
       {
         acercaDe:['',[Validators.required]],
@@ -39,12 +41,21 @@ export class AcercaDeComponent implements OnInit {
     );
   }
 
+  showSuccess() {
+    this.toastr.success('Las modificacions se realizaron con exito');
+  }
+
   openFormModal() {
     this.formModal.show();
   }
 
   save(event: Event) {
       this.acercaDe = this.acercaDeForm?.value
+      this.personaService.update(1,{
+        acercaDe: this.acercaDe
+       } ).subscribe(data=>{
+            this.showSuccess();
+      });
       this.formModal.hide();
   }
 

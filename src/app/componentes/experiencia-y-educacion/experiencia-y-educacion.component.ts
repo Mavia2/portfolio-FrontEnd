@@ -3,6 +3,10 @@ import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import { faPen, faPlusCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { ExperienciaService } from 'src/app/servicios/experiencia.service';
+import { EducacionService } from 'src/app/servicios/educacion.service';
+import { Educacion } from 'src/app/model/educacion';
 declare var window: any;
 
 @Component({
@@ -31,9 +35,10 @@ export class ExperienciaYEducacionComponent implements OnInit {
 
   @Input() estaLogueado: Observable<boolean>;
 
-  constructor(private datosPorfolio:PorfolioService, private formBuilder:FormBuilder ) {
+  constructor(private formBuilderEducacion:FormBuilder, private toastr: ToastrService,  private educacionService: EducacionService, private experienciaService: ExperienciaService, private datosPorfolio:PorfolioService, private formBuilder:FormBuilder ) {
     this.form=this.formBuilder.group(
       {
+        id:['',[Validators.required]],
         institucion:['',[Validators.required]],
         fotoUrl:['',[Validators.required]],
         cargo:['',[Validators.required]],
@@ -41,16 +46,19 @@ export class ExperienciaYEducacionComponent implements OnInit {
         fechaInicio:['',[Validators.required]],
         fechaFin:['',[Validators.required]],
         lugar:['',[Validators.required]],
+        idPersona:['',[Validators.required]],
       }
     )
-    this.formEducacion=this.formBuilder.group(
+    this.formEducacion=this.formBuilderEducacion.group(
       {
+        id:['',[Validators.required]],
         institucion:['',[Validators.required]],
         fotoUrl:['',[Validators.required]],
         titulo:['',[Validators.required]],
         fechaInicio:['',[Validators.required]],
         fechaFin:['',[Validators.required]],
         lugar:['',[Validators.required]],
+        idPersona:['',[Validators.required]],
       }
     )
    }
@@ -103,7 +111,7 @@ export class ExperienciaYEducacionComponent implements OnInit {
     this.eliminarTipo = tipo
     if (tipo == 'educacion') {
       this.tituloEliminar = 'Eliminar Educacion';
-      this.mensajeEliminar = `Esta seguro que desea eliminar esta institucion ${this.educacionList[index].institucion}`
+      this.mensajeEliminar = `Esta seguro que desea eliminar esta ${this.educacionList[index].institucion}`
       // endpoint delete
     } else {
       this.tituloEliminar = 'Eliminar experiencia';
@@ -115,8 +123,15 @@ export class ExperienciaYEducacionComponent implements OnInit {
 
   eliminar(){
     if (this.eliminarTipo == 'educacion') {
-      delete this.educacionList[this.eliminarIndex];
-      // endpoint delete
+      //delete this.educacionList[this.eliminarIndex];
+      this.educacionService.delete(this.educacionList[this.eliminarIndex].id).subscribe({
+        next: (data) => {
+          this.showSuccess();
+          this.ngOnInit();
+        },
+        error: (e) => this.showError(),
+        complete: () => console.info('complete')
+    });
     } else {
       delete this.experienciaList[this.eliminarIndex];
       // endpoint delete
@@ -136,15 +151,52 @@ export class ExperienciaYEducacionComponent implements OnInit {
     this.formModal.hide();
   }
 
+  showSuccess() {
+    this.toastr.success('Las modificacions se realizaron con exito');
+  }
+
+  showError() {
+    this.toastr.error('Error al realizar las modificaciones, por favor pruebe nuevamente en unos minutos');
+  }
+
   saveEducacion(event: Event, esEditar: boolean, index?: any) {
     event.preventDefault
     if (esEditar) {
       this.educacionList[index] = this.formEducacion.value
-    // guardar cambios en base de datos -> pegarle al endpot de update experiencia
+      this.educacionService.update(this.educacionList[index].id,{
+        fotoUrl: this.educacionList[index].fotoUrl,
+        institucion: this.educacionList[index].institucion,
+        titulo: this.educacionList[index].titulo,
+        fechaInicio:this.educacionList[index].fechaInicio,
+        fechaFin: this.educacionList[index].fechaFin,
+        lugar: this.educacionList[index].lugar,
+        idPersona: 1,
+      } ).subscribe({
+        next: (v) => this.showSuccess(),
+        error: (e) => this.showError(),
+        complete: () => console.info('complete')
+    });
     } else {
       this.educacionList.unshift(this.formEducacion.value);
-      // agregar experiencia en base de datos -> pegarle al endpot de crear experiencia
+      this.educacionService.save({
+        fotoUrl: this.educacionList[index].fotoUrl,
+        institucion: this.educacionList[index].institucion,
+        titulo: this.educacionList[index].titulo,
+        fechaInicio:this.educacionList[index].fechaInicio,
+        fechaFin: this.educacionList[index].fechaFin,
+        lugar: this.educacionList[index].lugar,
+        idPersona: 1,
+      } ).subscribe({
+        next: (data) => {
+          this.educacionList[index] = data
+          this.showSuccess();
+
+        },
+        error: (e) => this.showError(),
+        complete: () => console.info('complete')
+    });
     }
+
     this.formModalEducacion.hide();
   }
 

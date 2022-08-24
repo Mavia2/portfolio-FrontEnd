@@ -7,7 +7,7 @@ import { Experiencia } from '../model/experiencia';
 @Injectable({
   providedIn: 'root'
 })
-export class SExperienciaService {
+export class ExperienciaService {
   expURL = '/experiencia'
   baseURL = environment.baseUrl;
 

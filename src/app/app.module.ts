@@ -15,7 +15,9 @@ import { PortfolioComponent } from './componentes/portfolio/portfolio.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InterceptorService } from './servicios/interceptor.service';
 import { AutenticacionService } from './servicios/autenticacion.service';
-import { PersonaService } from './servicios/persona.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -39,6 +41,8 @@ import { PersonaService } from './servicios/persona.service';
     HttpClientModule,
     FormsModule,
     FontAwesomeModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
     ReactiveFormsModule
 
   ],
