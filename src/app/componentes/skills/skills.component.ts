@@ -32,10 +32,10 @@ export class SkillsComponent implements OnInit {
   constructor(private toastr: ToastrService, private skillService: SkillService, private datosPortfolio:PorfolioService, private formBuilder:FormBuilder) {
     this.form=this.formBuilder.group(
       {
-        id:['',[Validators.required]],
+        id:[''],
         nombre:['',[Validators.required]],
         porcentaje:['',[Validators.required]],
-        idPersona:['',[Validators.required]],
+        idPersona:[''],
 
       }
     )

@@ -28,7 +28,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Acerca De</label>
-                            <input formControlName="acercaDe" class="form-control" id="nombre" aria-describedby="acercaDeHelp">
+                            <textarea formControlName="acercaDe" class="form-control" id="nombre" rows="5" aria-describedby="acercaDeHelp"></textarea>
                             <div *ngIf="acercaDeForm?.errors && acercaDeForm?.touched">
                                 <p *ngIf="acercaDeForm?.hasError('required')" class="text-danger">
                                     El contenido AcercaDe es requerido.
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
                     Guardar Cambios
                   </button>
                     </div>

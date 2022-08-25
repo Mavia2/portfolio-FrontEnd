@@ -65,7 +65,7 @@
                             <label for="descripcion" class="form-label">Descripción</label>
                             <input formControlName="descripcion" class="form-control" id="descripcion" aria-describedby="descripcionHelp">
                             <div *ngIf="form.get('descripcion')?.errors && form.get('descripcion')?.touched">
-                                <p *ngIf="form.get('descripcion')?.hasError('descripcion')" class="text-danger">
+                                <p *ngIf="form.get('descripcion')?.hasError('required')" class="text-danger">
                                     La descripción del proyecto requerida.
                                 </p>
                             </div>
@@ -74,7 +74,7 @@
                             <label for="fechaRealizacion" class="form-label">Fecha Realización</label>
                             <input formControlName="fechaRealizacion" class="form-control" id="fechaRealizacion" aria-describedby="fecharealizacionHelp">
                             <div *ngIf="form.get('fechaRealizacion')?.errors && form.get('fechaRealizacion')?.touched">
-                                <p *ngIf="form.get('fechaRealizacion')?.hasError('fechaRealizacion')" class="text-danger">
+                                <p *ngIf="form.get('fechaRealizacion')?.hasError('required')" class="text-danger">
                                     La fecha de realización del proyecto requerida.
                                 </p>
                             </div>
@@ -84,14 +84,14 @@
                             <label for="proyectoUrl" class="form-label">Proyecto Url</label>
                             <input formControlName="proyectoUrl" class="form-control" id="proyectoUrl" aria-describedby="proyectoUrlHelp">
                             <div *ngIf="form.get('proyectoUrl')?.errors && form.get('proyectoUrl')?.touched">
-                                <p *ngIf="form.get('proyectoUrl')?.hasError('proyectoUrl')" class="text-danger">
+                                <p *ngIf="form.get('proyectoUrl')?.hasError('required')" class="text-danger">
                                     La Url del proyecto requerida.
                                 </p>
                             </div>
                         </div>
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary"[disabled]="form.invalid">
                               Guardar Cambios
                             </button>
                         </div>

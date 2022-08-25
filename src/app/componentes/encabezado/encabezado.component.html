@@ -134,12 +134,11 @@
                                 </p>
                             </div>
                         </div>
-
                         <div class="mb-3">
                             <label for="pais" class="form-label">País</label>
                             <input formControlName="pais" class="form-control" id="pais" aria-describedby="paisHelp">
-                            <div *ngIf="form.get('pais')?.errors && form.get('pais')?.touched">
-                                <p *ngIf="form.get('pais')?.hasError('pais')" class="text-danger">
+                            <div *ngIf="pais?.errors && pais?.touched">
+                                <p *ngIf="form.get('pais')?.hasError('required')" class="text-danger">
                                     El país es requerido.
                                 </p>
                             </div>
@@ -147,9 +146,9 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">
-                      Guardar Cambios
-                    </button>
+                        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+                            Guardar Cambios
+                        </button>
                     </div>
                 </form>
             </div>
@@ -169,7 +168,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="celular" class="form-label">Celular</label>
-                            <input formControlName="celular" class="form-control" id="nombre" aria-describedby="celularHelp" [readonly]='!(estaLogueado | async)'>
+                            <input formControlName="celular" class="form-control" id="celular" aria-describedby="celularHelp" [readonly]='!(estaLogueado | async)'>
                             <div *ngIf="form.get('celular')?.errors && form.get('celular')?.touched">
                                 <p *ngIf="form.get('celular')?.hasError('required')" class="text-danger">
                                     El número de celular es requerido.
@@ -178,24 +177,21 @@
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input formControlName="email" class="form-control" id="email" aria-describedby="emailHelp" [readonly]='!(estaLogueado | async)'>
+                            <input type="email" formControlName="email" class="form-control" id="email" aria-describedby="emailHelp" [readonly]='!(estaLogueado | async)'>
                             <div *ngIf="email?.errors && email?.touched">
                                 <p *ngIf="email?.hasError('required')" class="text-danger">
                                     El email es requerido.
                                 </p>
+                                <p *ngIf="email?.hasError('email')" class="text-danger">
+                                  El formato del email debe ser válido.
+                              </p>
                             </div>
                         </div>
-
-
-
-
-
-
                     </div>
                     <div class="modal-footer"  *ngIf="(estaLogueado | async)">
-                        <button type="submit" class="btn btn-primary">
-                    Guardar Cambios
-                  </button>
+                        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+                            Guardar Cambios
+                        </button>
                     </div>
                 </form>
             </div>

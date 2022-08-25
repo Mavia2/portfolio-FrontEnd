@@ -116,7 +116,7 @@
                             <input formControlName="fotoUrl" class="form-control" id="fotoUrl" aria-describedby="logoInstitucionHelp">
                             <div *ngIf="form.get('fotoUrl')?.errors && form.get('fotoUrl')?.touched">
                                 <p *ngIf="form.get('fotoUrl')?.hasError('required')" class="text-danger">
-                                    Adjunte por favor Logo Institución.
+                                    Adjunte por favor el Logo de la Institución.
                                 </p>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                             <input formControlName="cargo" class="form-control" id="cargo" aria-describedby="cargoHelp">
                             <div *ngIf="form.get('cargo')?.errors && form.get('cargo')?.touched">
                                 <p *ngIf="form.get('cargo')?.hasError('required')" class="text-danger">
-                                    La ocupación requerida.
+                                    El cargo es requerido.
                                 </p>
                             </div>
                         </div>
@@ -144,7 +144,7 @@
                             <label for="fechaInicio" class="form-label">Fecha Inicio:</label>
                             <input formControlName="fechaInicio" class="form-control" id="fechaInicio" aria-describedby="fechaInicioHelp">
                             <div *ngIf="form.get('fechaInicio')?.errors && form.get('fechaInicio')?.touched">
-                                <p *ngIf="form.get('fechaInicio')?.hasError('fechaInicio')" class="text-danger">
+                                <p *ngIf="form.get('fechaInicio')?.hasError('required')" class="text-danger">
                                     Ingrese por favor la fecha de inicio.
                                 </p>
                             </div>
@@ -154,7 +154,7 @@
                             <label for="fechaFin" class="form-label">Fecha Fin:</label>
                             <input formControlName="fechaFin" class="form-control" id="fechaFin" aria-describedby="fechaFinHelp">
                             <div *ngIf="form.get('fechaFin')?.errors && form.get('fechaFin')?.touched">
-                                <p *ngIf="form.get('fechaFin')?.hasError('fechaFin')" class="text-danger">
+                                <p *ngIf="form.get('fechaFin')?.hasError('required')" class="text-danger">
                                     Ingrese por favor la fecha de finalización laboral.
                                 </p>
                             </div>
@@ -164,7 +164,7 @@
                             <label for="lugar" class="form-label">Ciudad:</label>
                             <input formControlName="lugar" class="form-control" id="lugar" aria-describedby="ciudadHelp">
                             <div *ngIf="form.get('lugar')?.errors && form.get('lugar')?.touched">
-                                <p *ngIf="form.get('lugar')?.hasError('lugar')" class="text-danger">
+                                <p *ngIf="form.get('lugar')?.hasError('required')" class="text-danger">
                                     Ingrese por favor la ciudad en donde trabajó.
                                 </p>
                             </div>
@@ -173,9 +173,9 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">
-                Guardar Cambios
-              </button>
+                        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+                          Guardar Cambios
+                        </button>
                     </div>
                 </form>
             </div>
@@ -196,8 +196,8 @@
                         <div class="mb-3">
                             <label for="institucion" class="form-label">Institución</label>
                             <input formControlName="institucion" class="form-control" id="institucion" aria-describedby="institucionHelp">
-                            <div *ngIf="form.get('institucion')?.errors && form.get('institucion')?.touched">
-                                <p *ngIf="form.get('institucion')?.hasError('required')" class="text-danger">
+                            <div *ngIf="formEducacion.get('institucion')?.errors && formEducacion.get('institucion')?.touched">
+                                <p *ngIf="formEducacion.get('institucion')?.hasError('required')" class="text-danger">
                                     El nombre de la Institución es requerido.
                                 </p>
                             </div>
@@ -205,8 +205,8 @@
                         <div class="mb-3">
                             <label for="fotoUrl" class="form-label">Logo Institucion</label>
                             <input formControlName="fotoUrl" class="form-control" id="fotoUrl" aria-describedby="logoInstitucionHelp">
-                            <div *ngIf="form.get('fotoUrl')?.errors && form.get('fotoUrl')?.touched">
-                                <p *ngIf="form.get('fotoUrl')?.hasError('required')" class="text-danger">
+                            <div *ngIf="formEducacion.get('fotoUrl')?.errors && formEducacion.get('fotoUrl')?.touched">
+                                <p *ngIf="formEducacion.get('fotoUrl')?.hasError('required')" class="text-danger">
                                     Adjunte por favor Logo Institución.
                                 </p>
                             </div>
@@ -214,8 +214,8 @@
                         <div class="mb-3">
                             <label for="titulo" class="form-label">Titulo</label>
                             <input formControlName="titulo" class="form-control" id="titulo" aria-describedby="cargoHelp">
-                            <div *ngIf="form.get('titulo')?.errors && form.get('titulo')?.touched">
-                                <p *ngIf="form.get('titulo')?.hasError('required')" class="text-danger">
+                            <div *ngIf="formEducacion.get('titulo')?.errors && formEducacion.get('titulo')?.touched">
+                                <p *ngIf="formEducacion.get('titulo')?.hasError('required')" class="text-danger">
                                     El titulo es requerido.
                                 </p>
                             </div>
@@ -223,8 +223,8 @@
                         <div class="mb-3">
                             <label for="fechaInicio" class="form-label">Fecha Inicio:</label>
                             <input formControlName="fechaInicio" class="form-control" id="fechaInicio" aria-describedby="fechaInicioHelp">
-                            <div *ngIf="form.get('fechaInicio')?.errors && form.get('fechaInicio')?.touched">
-                                <p *ngIf="form.get('fechaInicio')?.hasError('fechaInicio')" class="text-danger">
+                            <div *ngIf="formEducacion.get('fechaInicio')?.errors && formEducacion.get('fechaInicio')?.touched">
+                                <p *ngIf="formEducacion.get('fechaInicio')?.hasError('required')" class="text-danger">
                                     Ingrese por favor la fecha de inicio.
                                 </p>
                             </div>
@@ -232,8 +232,8 @@
                         <div class="mb-3">
                             <label for="fechaFin" class="form-label">Fecha Fin:</label>
                             <input formControlName="fechaFin" class="form-control" id="fechaFin" aria-describedby="fechaFinHelp">
-                            <div *ngIf="form.get('fechaFin')?.errors && form.get('fechaFin')?.touched">
-                                <p *ngIf="form.get('fechaFin')?.hasError('fechaFin')" class="text-danger">
+                            <div *ngIf="formEducacion.get('fechaFin')?.errors && formEducacion.get('fechaFin')?.touched">
+                                <p *ngIf="formEducacion.get('fechaFin')?.hasError('required')" class="text-danger">
                                     Ingrese por favor la fecha de finalización laboral.
                                 </p>
                             </div>
@@ -242,17 +242,17 @@
                         <div class="mb-3">
                             <label for="lugar" class="form-label">Ciudad:</label>
                             <input formControlName="lugar" class="form-control" id="lugar" aria-describedby="ciudadHelp">
-                            <div *ngIf="form.get('lugar')?.errors && form.get('lugar')?.touched">
-                                <p *ngIf="form.get('lugar')?.hasError('lugar')" class="text-danger">
+                            <div *ngIf="formEducacion.get('lugar')?.errors && formEducacion.get('lugar')?.touched">
+                                <p *ngIf="formEducacion.get('lugar')?.hasError('required')" class="text-danger">
                                     Ingrese por favor la ciudad en donde estudió.
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">
-              Guardar Cambios
-            </button>
+                        <button type="submit" class="btn btn-primary" [disabled]="formEducacion.invalid">
+                          Guardar Cambios
+                         </button>
                     </div>
                 </form>
             </div>

@@ -38,27 +38,27 @@ export class ExperienciaYEducacionComponent implements OnInit {
   constructor(private formBuilderEducacion:FormBuilder, private toastr: ToastrService,  private educacionService: EducacionService, private experienciaService: ExperienciaService, private datosPorfolio:PorfolioService, private formBuilder:FormBuilder ) {
     this.form=this.formBuilder.group(
       {
-        id:['',[Validators.required]],
+        id:[''],
         institucion:['',[Validators.required]],
         fotoUrl:['',[Validators.required]],
         cargo:['',[Validators.required]],
-        descripcion:[''],
+        descripcion:['',[Validators.required]],
         fechaInicio:['',[Validators.required]],
         fechaFin:['',[Validators.required]],
         lugar:['',[Validators.required]],
-        idPersona:['',[Validators.required]],
+        idPersona:[''],
       }
     )
     this.formEducacion=this.formBuilderEducacion.group(
       {
-        id:['',[Validators.required]],
+        id:[''],
         institucion:['',[Validators.required]],
         fotoUrl:['',[Validators.required]],
         titulo:['',[Validators.required]],
         fechaInicio:['',[Validators.required]],
         fechaFin:['',[Validators.required]],
         lugar:['',[Validators.required]],
-        idPersona:['',[Validators.required]],
+        idPersona:[''],
       }
     )
    }
@@ -112,11 +112,11 @@ export class ExperienciaYEducacionComponent implements OnInit {
     this.eliminarTipo = tipo
     if (tipo == 'educacion') {
       this.tituloEliminar = 'Eliminar Educacion';
-      this.mensajeEliminar = `Esta seguro que desea eliminar: ${this.educacionList[index].institucion}`
+      this.mensajeEliminar = `Está seguro que desea eliminar: ${this.educacionList[index].institucion}?`
       // endpoint delete
     } else {
       this.tituloEliminar = 'Eliminar experiencia';
-      this.mensajeEliminar = `Esta seguro que desea eliminar esta experiencia ${this.experienciaList[index].institucion}`
+      this.mensajeEliminar = `Está seguro que desea eliminar esta experiencia ${this.experienciaList[index].institucion}?`
     }
     this.eliminarIndex = index
     this.formModalEliminar.show();
@@ -159,6 +159,7 @@ export class ExperienciaYEducacionComponent implements OnInit {
         cargo: this.experienciaList[index].cargo,
         descripcion: this.experienciaList[index].descripcion,
         idPersona: 1
+
       } ).subscribe({
         next: (v) => this.showSuccess(),
         error: (e) => this.showError(),
@@ -192,7 +193,7 @@ export class ExperienciaYEducacionComponent implements OnInit {
   }
 
   showSuccess() {
-    this.toastr.success('Las modificacions se realizaron con exito');
+    this.toastr.success('Las modificacions se realizaron con éxito');
   }
 
   showError() {

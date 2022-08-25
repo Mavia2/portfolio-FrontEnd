@@ -32,12 +32,12 @@ export class ProyectosComponent implements OnInit {
   constructor(private toastr: ToastrService, private proyectoService: ProyectoService, private datosPorfolio:PorfolioService, private formBuilder:FormBuilder) {
     this.form=this.formBuilder.group(
       {
-        id:['',[Validators.required]],
+        id:[''],
         titulo:['',[Validators.required]],
         descripcion:['',[Validators.required]],
         fechaRealizacion:['',[Validators.required]],
         proyectoUrl:['',[Validators.required]],
-        idPersona:['',[Validators.required]],
+        idPersona:[''],
       }
     )
 
@@ -70,7 +70,7 @@ export class ProyectosComponent implements OnInit {
 
   openEliminar( index: any){
     this.tituloEliminar = 'Eliminar proyecto';
-    this.mensajeEliminar = `Esta seguro que desea eliminar este proyecto ${this.proyectosList[index].titulo}?`;
+    this.mensajeEliminar = `Está seguro que desea eliminar este proyecto ${this.proyectosList[index].titulo}?`;
     // endpoint delete
     this.eliminarIndex = index;
     this.formModalEliminar.show();

@@ -33,7 +33,7 @@ export class EncabezadoComponent implements OnInit {
         ciudad:['',[Validators.required]],
         pais:['',[Validators.required]],
         celular:['',[Validators.required]],
-        email:['',[Validators.required]],
+        email:['',[Validators.required, Validators.email]],
       }
       )
    }
