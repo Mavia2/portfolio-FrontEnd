@@ -1,29 +1,72 @@
-<h1 class="m-5">Iniciar sesión:</h1>
-<form [formGroup]="form" class="m-5" (ngSubmit)="onEnviar($event)">
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email</label>
-        <input type="email" formControlName="username" [ngClass]="{'is-invalid': Username?.errors && Username?.touched, 'is-valid': !Username?.errors && Username?.touched }" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <div *ngIf="Username?.errors && Username?.touched">
-            <p *ngIf="Username?.hasError('required')" class="text-danger">
-                El email es requerido.
-            </p>
-            <p *ngIf="Username?.hasError('email')" class="text-danger">
-                El formato del email debe ser válido.
-            </p>
-        </div>
-    </div>
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-        <input type="password" formControlName="password" [ngClass]="{'is-invalid': Password?.errors && Password?.touched, 'is-valid': !Password?.errors && Password?.touched }" class="form-control" id="exampleInputPassword1">
-        <div *ngIf="Password?.errors && Password?.touched">
-            <p *ngIf="Password?.hasError('required')" class="text-danger">
-                El password es requerido.
-            </p>
-            <p *ngIf="Password?.errors?.['minlength']" class="text-danger">
-                El password debe ser de 8 o más caracteres.
-            </p>
-        </div>
-    </div>
 
-    <button type="submit" class="btn btn-primary">Enviar</button>
-</form>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-12 min-vh-100 d-flex flex-column justify-content-center">
+          <div class="row">
+              <div class="col-lg-6 col-md-8 mx-auto">
+                  <!-- form card login -->
+                  <div class="card rounded shadow shadow-sm">
+                      <div class="card-header">
+                          <h3 class="mb-0">Login</h3>
+                      </div>
+                      <div class="card-body">
+                        <form [formGroup]="form" class="m-5" (ngSubmit)="onEnviar($event)">
+                          <div class="mb-4">
+                              <label for="exampleInputEmail1" class="form-label">Email</label>
+                              <input type="email" formControlName="username" [ngClass]="{'is-invalid': Username?.errors && Username?.touched, 'is-valid': !Username?.errors && Username?.touched }" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                              <div *ngIf="Username?.errors && Username?.touched">
+                                  <p *ngIf="Username?.hasError('required')" class="text-danger">
+                                      El email es requerido.
+                                  </p>
+                                  <p *ngIf="Username?.hasError('email')" class="text-danger">
+                                      El formato del email debe ser válido.
+                                  </p>
+                              </div>
+                          </div>
+                          <div class="mb-4">
+                              <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                              <input type="password" formControlName="password" [ngClass]="{'is-invalid': Password?.errors && Password?.touched, 'is-valid': !Password?.errors && Password?.touched }" class="form-control" id="exampleInputPassword1">
+                              <div *ngIf="Password?.errors && Password?.touched">
+                                  <p *ngIf="Password?.hasError('required')" class="text-danger">
+                                      El password es requerido.
+                                  </p>
+                                  <p *ngIf="Password?.errors?.['minlength']" class="text-danger">
+                                      El password debe ser de 8 o más caracteres.
+                                  </p>
+                              </div>
+                          </div>
+                          <div class="error-container">
+                            <div
+                              class="error"
+                              *ngIf="form.get('username')?.hasError('auth')"
+                              >Usuario o contraseña no validos
+                              </div>
+                            <div
+                              class="error"
+                              *ngIf="
+                              form.get('username')?.errors &&
+                              form.get('username')?.hasError('generalError')
+                              "
+                              >Ha ocurrido un error por favor inténtelo nuevamente en unos
+                              minutos.</div>
+                          </div>
+
+                          <button type="submit" class="btn btn-primary" [disabled]="isLoading || form.invalid">Enviar</button>
+                      </form>
+                      </div>
+                      <!--/card-block-->
+                  </div>
+                  <!-- /form card login -->
+
+              </div>
+
+
+          </div>
+          <!--/row-->
+
+      </div>
+      <!--/col-->
+  </div>
+  <!--/row-->
+</div>

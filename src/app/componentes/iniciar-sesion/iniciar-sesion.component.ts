@@ -11,6 +11,7 @@ import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 })
 export class IniciarSesionComponent implements OnInit {
   form:FormGroup;
+  isLoading = false;
 
   constructor(private formBuilder:FormBuilder, private autenticacionService:AutenticacionService, private ruta:Router) {
     this.form=this.formBuilder.group(
@@ -42,9 +43,23 @@ export class IniciarSesionComponent implements OnInit {
 
   onEnviar(event:Event) {
     event.preventDefault;
-    this.autenticacionService.IniciarSesion(this.form.value).subscribe(data=>{
-      console.log("DATA:" + JSON.stringify(data));
-      this.ruta.navigate(['/portfolio']);
+    this.isLoading = true;
+    this.autenticacionService.IniciarSesion(this.form.value).subscribe({
+      next: (data) => {
+        console.log("DATA:" + JSON.stringify(data));
+        this.ruta.navigate(['/portfolio']);
+      },
+      error: (error) => {
+        this.form.reset();
+        this.isLoading = false;
+        if(error.status === 401 || error.error.type === 'password-not-equal'){
+          this.form.controls['username'].setErrors({ auth: true });
+          this.form.controls['password'].setErrors({ auth:true });
+        } else {
+          this.form.controls['username'].setErrors({ generalError: true });
+        }
+      },
+      complete: () => ''
     })
   }
 
