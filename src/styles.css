@@ -35,13 +35,15 @@
 }
 
 .imgLogoHeader {
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 25px;
 }
 
 .content {
-    padding-left: 15px;
-    padding-right: 15px;
+    margin-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
 }
 
 .card {
@@ -57,12 +59,11 @@
 .cardHeader {
     border: 1px solid rgb(255, 222, 226);
     border-radius: 20px;
-    margin: 0.5%;
     box-shadow: 5px 5px 5px rgb(250, 237, 237)
 }
 
 .infoData {
-    padding: 16px;
+    padding: 32px;
 }
 
 .botonEditarFoto {

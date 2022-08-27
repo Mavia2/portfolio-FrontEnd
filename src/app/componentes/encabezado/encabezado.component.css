@@ -1,6 +1,6 @@
 .header {
     background-color: rgb(243, 243, 243);
-    height: 50px;
+    height: 60px;
     justify-content: center;
 }
 
@@ -52,5 +52,5 @@
 .argentinaPrograma {
     padding-left: 3px;
     padding-right: 3px;
-    width: 100px;
+    width: 150px;
 }

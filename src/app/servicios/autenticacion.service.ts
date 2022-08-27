@@ -22,8 +22,6 @@ export class AutenticacionService {
 
    IniciarSesion(credenciales:any):Observable<any>
    {
-    //sessionStorage.setItem('token', 'JWT');
-    //this.isLoginSubject.next(true);
 
     return this.http.post(this.url, credenciales).pipe(map(data=>{
       sessionStorage.setItem('currentUser', JSON.stringify(data));
