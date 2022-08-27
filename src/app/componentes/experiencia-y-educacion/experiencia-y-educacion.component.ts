@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import { faPen, faPlusCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { ExperienciaService } from 'src/app/servicios/experiencia.service';
 import { EducacionService } from 'src/app/servicios/educacion.service';
-import { Educacion } from 'src/app/model/educacion';
+import {  StorageService } from 'src/app/servicios/firebase-storage.service';
 declare var window: any;
 
 @Component({
@@ -31,16 +31,28 @@ export class ExperienciaYEducacionComponent implements OnInit {
   mensajeEliminar='';
   eliminarIndex: number;
   eliminarTipo: string;
+  file?: File;
+  nombreArchivo = '';
+  isUploading: boolean = false;
+  fotoUrlDefault = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/1920px-IBM_logo.svg.png"
 
 
   @Input() estaLogueado: Observable<boolean>;
 
-  constructor(private formBuilderEducacion:FormBuilder, private toastr: ToastrService,  private educacionService: EducacionService, private experienciaService: ExperienciaService, private datosPorfolio:PorfolioService, private formBuilder:FormBuilder ) {
+  constructor(
+    private readonly storageService: StorageService,
+    private formBuilderEducacion:FormBuilder,
+    private toastr: ToastrService,
+    private educacionService: EducacionService,
+    private experienciaService: ExperienciaService,
+    private datosPorfolio:PorfolioService,
+    private formBuilder:FormBuilder ) {
     this.form=this.formBuilder.group(
       {
         id:[''],
         institucion:['',[Validators.required]],
-        fotoUrl:['',[Validators.required]],
+        fotoUrl:[''],
+        imagen:[null],
         cargo:['',[Validators.required]],
         descripcion:['',[Validators.required]],
         fechaInicio:['',[Validators.required]],
@@ -53,7 +65,8 @@ export class ExperienciaYEducacionComponent implements OnInit {
       {
         id:[''],
         institucion:['',[Validators.required]],
-        fotoUrl:['',[Validators.required]],
+        fotoUrl:[''],
+        imagen:[null],
         titulo:['',[Validators.required]],
         fechaInicio:['',[Validators.required]],
         fechaFin:['',[Validators.required]],
@@ -84,13 +97,15 @@ export class ExperienciaYEducacionComponent implements OnInit {
 
   openFormModal(type: string, index?: any) {
     if (type == 'edit') {
-      this.index = index
-      this.esEditar = true
-      this.form.setValue(this.experienciaList[index])
+      this.index = index;
+      this.esEditar = true;
+      this.form.patchValue(this.experienciaList[index]);
+      this.form.patchValue({imagen: null});
       this.formModal.show();
     } else {
       this.esEditar = false
       this.form.reset()
+      this.form.patchValue({fotoUrl: this.fotoUrlDefault})
       this.formModal.show();
     }
   }
@@ -99,11 +114,13 @@ export class ExperienciaYEducacionComponent implements OnInit {
     if (type == 'edit') {
       this.index = index
       this.esEditar = true
-      this.formEducacion.setValue(this.educacionList[index])
+      this.formEducacion.patchValue(this.educacionList[index])
+      this.formEducacion.patchValue({imagen: null});
       this.formModalEducacion.show();
     } else {
       this.esEditar = false
       this.formEducacion.reset()
+      this.formEducacion.patchValue({fotoUrl: this.fotoUrlDefault})
       this.formModalEducacion.show();
     }
   }
@@ -146,9 +163,38 @@ export class ExperienciaYEducacionComponent implements OnInit {
     this.formModalEliminar.hide();
   }
 
-  save(event: Event, esEditar: boolean, index?: any) {
+  handleSaveExperiencia(event: Event, esEditar: boolean, index?: any) {
     event.preventDefault
-    if (esEditar) {
+    this.subirArchivo(this.saveExperiencia, esEditar, "experiencia", index);
+  }
+
+ subirArchivo(save: (url:string, esEditar: boolean, index?: any) => void, esEditar: boolean, type: string, index?: any) {
+    if (this.file) {
+      let archivo = this.file;
+      const { downloadUrl$ } = this.storageService.uploadFileAndGetMetadata(
+        this.nombreArchivo,
+        archivo,
+      );
+      this.isUploading = true;
+      downloadUrl$
+      .pipe(
+        finalize(() =>  "" )
+      )
+      .subscribe((downloadUrl) => {
+        save(downloadUrl, esEditar, index);
+        this.file = undefined;
+        this.isUploading = false;
+        type === "experiencia" ? this.formModal.hide(): this.formModalEducacion.hide();
+      });
+    } else {
+      save(this.formEducacion.value.fotoUrl, esEditar, index);
+      type === "experiencia" ? this.formModal.hide(): this.formModalEducacion.hide();
+    }
+  }
+
+  saveExperiencia = (url: string, esEditar: boolean, index?: any) => {
+    if (esEditar){
+      this.form.patchValue({fotoUrl: url});
       this.experienciaList[index] = this.form.value
       this.experienciaService.update(this.experienciaList[index].id,{
         fotoUrl: this.experienciaList[index].fotoUrl,
@@ -159,15 +205,15 @@ export class ExperienciaYEducacionComponent implements OnInit {
         cargo: this.experienciaList[index].cargo,
         descripcion: this.experienciaList[index].descripcion,
         idPersona: 1
-
-      } ).subscribe({
+      }).subscribe({
         next: (v) => this.showSuccess(),
         error: (e) => this.showError(),
-        complete: () => console.info('complete')
-    });
+        complete: () => this.formModal.hide()
+      });
+
     } else {
       const payLoad = {
-        fotoUrl: this.form.value.fotoUrl,
+        fotoUrl: url,
         institucion: this.form.value.institucion,
         fechaInicio: this.form.value.fechaInicio,
         fechaFin: this.form.value.fechaFin,
@@ -178,7 +224,6 @@ export class ExperienciaYEducacionComponent implements OnInit {
       }
       this.experienciaService.save(payLoad).subscribe({
         next: (data) => {
-          console.log("DATA EXPERIENCIA",data);
           this.ngOnInit();
           this.showSuccess();
         },
@@ -186,10 +231,71 @@ export class ExperienciaYEducacionComponent implements OnInit {
           this.showError();
           this.ngOnInit();
         },
-        complete: () => console.info('complete')
-    });
+        complete: () =>  {
+        },
+      });
     }
-    this.formModal.hide();
+  }
+
+  handleSaveEducacion(event: Event, esEditar: boolean, index?: any) {
+    event.preventDefault
+    this.subirArchivo(this.saveEducacion, esEditar, "educacion",  index);
+  }
+
+  saveEducacion = (url: string, esEditar: boolean, index?: any)=>{
+    if (esEditar){
+      this.formEducacion.patchValue({fotoUrl: url});
+      this.educacionList[index] = this.formEducacion.value
+      this.educacionService.update(this.educacionList[index].id,{
+        fotoUrl: this.educacionList[index].fotoUrl,
+        institucion: this.educacionList[index].institucion,
+        fechaInicio: this.educacionList[index].fechaInicio,
+        titulo: this.educacionList[index].titulo,
+        lugar: this.educacionList[index].lugar,
+        fechaFin: this.experienciaList[index].fechaFin,
+        idPersona: 1
+      }).subscribe({
+        next: (v) => {
+          this.showSuccess();
+          this.educacionList[index].imagen = null;
+        },
+        error: (e) => {
+          this.showError();
+          this.educacionList[index].imagen = null;
+        },
+        complete: () => this.formModal.hide()
+      });
+
+    } else {
+      const payLoad = {
+        fotoUrl: url,
+        institucion: this.formEducacion.value.institucion,
+        fechaInicio: this.formEducacion.value.fechaInicio,
+        fechaFin: this.formEducacion.value.fechaFin,
+        lugar: this.formEducacion.value.lugar,
+        titulo: this.formEducacion.value.titulo,
+        idPersona: 1,
+      }
+      this.educacionService.save(payLoad).subscribe({
+        next: (data) => {
+          this.ngOnInit();
+          this.showSuccess();
+        },
+        error: (e) => {
+          this.showError();
+          this.ngOnInit();
+        },
+        complete: () =>  {
+        },
+      });
+    }
+  }
+
+  public cambioArchivo(event: any) {
+    if (event.target.files.length > 0) {
+        this.nombreArchivo = event.target.files[0].name;
+        this.file = event.target.files[0];
+    }
   }
 
   showSuccess() {
@@ -198,47 +304,6 @@ export class ExperienciaYEducacionComponent implements OnInit {
 
   showError() {
     this.toastr.error('Error al realizar las modificaciones, por favor pruebe nuevamente en unos minutos');
-  }
-
-  saveEducacion(event: Event, esEditar: boolean, index?: any) {
-    event.preventDefault
-    if (esEditar) {
-      this.educacionList[index] = this.formEducacion.value
-      this.educacionService.update(this.educacionList[index].id,{
-        fotoUrl: this.educacionList[index].fotoUrl,
-        institucion: this.educacionList[index].institucion,
-        titulo: this.educacionList[index].titulo,
-        fechaInicio:this.educacionList[index].fechaInicio,
-        fechaFin: this.educacionList[index].fechaFin,
-        lugar: this.educacionList[index].lugar,
-        idPersona: 1,
-      } ).subscribe({
-        next: (v) => this.showSuccess(),
-        error: (e) => this.showError(),
-        complete: () => console.info('complete')
-    });
-    } else {
-      const payload = {
-        fotoUrl: this.formEducacion.value.fotoUrl,
-        institucion: this.formEducacion.value.institucion,
-        titulo: this.formEducacion.value.titulo,
-        fechaInicio:this.formEducacion.value.fechaInicio,
-        fechaFin: this.formEducacion.value.fechaFin,
-        lugar: this.formEducacion.value.lugar,
-        idPersona: 1,
-      }
-      this.educacionService.save(payload).subscribe({
-        next: (data) => {
-          console.log("DATA EDUCACION", data)
-          this.ngOnInit();
-          this.showSuccess();
-        },
-        error: (e) => this.showError(),
-        complete: () => console.info('complete')
-    });
-    }
-
-    this.formModalEducacion.hide();
   }
 
   get institucion() {

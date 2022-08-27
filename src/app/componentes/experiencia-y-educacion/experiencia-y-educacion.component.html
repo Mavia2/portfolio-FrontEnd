@@ -100,7 +100,7 @@
                     <h5 class="modal-title" id="exampleModalLabel" *ngIf="!esEditar">crear Experiencia</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form [formGroup]="form" (ngSubmit)="save($event, esEditar, index )">
+                <form [formGroup]="form" (ngSubmit)="handleSaveExperiencia($event, esEditar, index )">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="institucion" class="form-label">Institución</label>
@@ -112,13 +112,8 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="fotoUrl" class="form-label">Logo Institucion</label>
-                            <input formControlName="fotoUrl" class="form-control" id="fotoUrl" aria-describedby="logoInstitucionHelp">
-                            <div *ngIf="form.get('fotoUrl')?.errors && form.get('fotoUrl')?.touched">
-                                <p *ngIf="form.get('fotoUrl')?.hasError('required')" class="text-danger">
-                                    Adjunte por favor el Logo de la Institución.
-                                </p>
-                            </div>
+                            <label for="imagen" class="form-label">Logo Institucion</label>
+                            <input type="file" formControlName="imagen" accept="image/*" class="form-control" id="imagen" aria-describedby="logoInstitucionHelp" (change)="cambioArchivo($event)">
                         </div>
                         <div class="mb-3">
                             <label for="cargo" class="form-label">Cargo</label>
@@ -173,8 +168,9 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
-                          Guardar Cambios
+                        <button type="submit" class="btn btn-primary isLoading" [disabled]="form.invalid">
+                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="(isUploading)"></span>
+                          {{isUploading ? "Guardando cambios": "Guardar cambios"}}
                         </button>
                     </div>
                 </form>
@@ -191,7 +187,7 @@
                     <h5 class="modal-title" id="exampleModalLabel" *ngIf="!esEditar">Crear Educacion</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form [formGroup]="formEducacion" (ngSubmit)="saveEducacion($event, esEditar, index )">
+                <form [formGroup]="formEducacion" (ngSubmit)="handleSaveEducacion($event, esEditar, index )">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="institucion" class="form-label">Institución</label>
@@ -203,13 +199,9 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="fotoUrl" class="form-label">Logo Institucion</label>
-                            <input formControlName="fotoUrl" class="form-control" id="fotoUrl" aria-describedby="logoInstitucionHelp">
-                            <div *ngIf="formEducacion.get('fotoUrl')?.errors && formEducacion.get('fotoUrl')?.touched">
-                                <p *ngIf="formEducacion.get('fotoUrl')?.hasError('required')" class="text-danger">
-                                    Adjunte por favor Logo Institución.
-                                </p>
-                            </div>
+                            <label for="imagen" class="form-label">Logo Institucion</label>
+                            <input type="file" formControlName="imagen" class="form-control" id="imagen" aria-describedby="logoInstitucionHelp" (change)="cambioArchivo($event)">
+
                         </div>
                         <div class="mb-3">
                             <label for="titulo" class="form-label">Titulo</label>
@@ -251,7 +243,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" [disabled]="formEducacion.invalid">
-                          Guardar Cambios
+                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="(isUploading)"></span>
+                          {{isUploading ? "Guardando cambios": "Guardar cambios"}}
                          </button>
                     </div>
                 </form>

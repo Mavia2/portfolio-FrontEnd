@@ -4,9 +4,11 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
-import { Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { PersonaService } from 'src/app/servicios/persona.service';
 import { ToastrService } from 'ngx-toastr';
+import { Portfolio } from 'src/app/model/portfolio';
+import { StorageService } from 'src/app/servicios/firebase-storage.service';
 declare var window: any;
 
 
@@ -16,15 +18,25 @@ declare var window: any;
   styleUrls: ['./encabezado.component.css']
 })
 export class EncabezadoComponent implements OnInit {
-  miPortfolio: any;
+  miPortfolio: Portfolio;
   editIcon = faPen;
   formModal: any;
+  formFotoModal: any;
   form:FormGroup;
+  formFoto:FormGroup;
   formInfoContacto: any;
+  file?: File;
+  nombreArchivo = '';
+  tipoFoto = "";
+  tituloFoto = '';
+  isUploading: boolean = false;
+  fotoUrlHeaderDefault = "https://www.xtrafondos.com/wallpapers/espiral-tecnologico-4564.jpg"
+  fotoUrlPerfilDefault = "https://files.loveisinmyhair.com/files/styles/large/public/c/cara-ovalada-cortes-de-cabello.jpg?itok=xonSYCXk"
+
 
   @Input() estaLogueado: Observable<boolean>;
 
-  constructor(private toastr: ToastrService, private personaService: PersonaService, private datosPorfolio:PorfolioService, private formBuilder:FormBuilder, private router: Router, private autenticacionService:AutenticacionService) {
+  constructor( private readonly storageService: StorageService, private toastr: ToastrService, private personaService: PersonaService, private datosPorfolio:PorfolioService, private formBuilder:FormBuilder, private router: Router, private autenticacionService:AutenticacionService) {
     this.form=this.formBuilder.group(
       {
         nombre:['',[Validators.required]],
@@ -36,11 +48,19 @@ export class EncabezadoComponent implements OnInit {
         email:['',[Validators.required, Validators.email]],
       }
       )
+      this.formFoto=this.formBuilder.group(
+        {
+          imagen:[null,[Validators.required]],
+          fotoUrl:[''],
+        }
+        )
    }
 
   ngOnInit(): void {
     this.datosPorfolio.detail(1).subscribe(data => {
       this.miPortfolio=data;
+      if (this.miPortfolio.imagenHeader === null) this.miPortfolio.imagenHeader = this.fotoUrlHeaderDefault;
+      if (this.miPortfolio.imagenPerfil === null) this.miPortfolio.imagenPerfil = this.fotoUrlPerfilDefault;
       this.nombre?.setValue(this.miPortfolio.nombre);
       this.apellido?.setValue(this.miPortfolio.apellido);
       this.ocupacion?.setValue(this.miPortfolio.ocupacion);
@@ -53,9 +73,76 @@ export class EncabezadoComponent implements OnInit {
     this.formModal = new window.bootstrap.Modal(
       document.getElementById('myModal')
     );
+    this.formFotoModal = new window.bootstrap.Modal(
+      document.getElementById('modalFoto')
+    );
     this.formInfoContacto = new window.bootstrap.Modal(
       document.getElementById('infoContacto')
     );
+
+  }
+
+  openFotoFormModal(tipoFoto: string) {
+      this.tipoFoto = tipoFoto;
+      this.tituloFoto = tipoFoto ==='header' ? 'Imagen Header' : 'Imagen Perfil'
+      this.formFoto.patchValue({imagen: null});
+      this.formFotoModal.show();
+  }
+
+  public cambioArchivo(event: any) {
+    if (event.target.files.length > 0) {
+        this.nombreArchivo = event.target.files[0].name;
+        this.file = event.target.files[0];
+    }
+  }
+
+  handleSaveFoto(event: any, tipoFoto: string){
+    event.preventDefault
+    this.subirArchivo(this.saveFoto, tipoFoto);
+  }
+
+  subirArchivo(save: (url:string, tipoFoto: string) => void, tipoFoto: string) {
+    if (this.file) {
+      let archivo = this.file;
+      const { downloadUrl$ } = this.storageService.uploadFileAndGetMetadata(
+        this.nombreArchivo,
+        archivo,
+      );
+      this.isUploading = true;
+      downloadUrl$
+      .pipe(
+        finalize(() =>  "" )
+      )
+      .subscribe((downloadUrl) => {
+        save(downloadUrl, tipoFoto);
+        this.file = undefined;
+        this.isUploading = false;
+        this.formFotoModal.hide();
+      });
+    }
+  }
+
+  saveFoto = (url: string, tipoFoto: string) => {
+    let payload: any = {
+      imagenHeader: url,
+    };
+    if (tipoFoto!=='header'){
+      payload = {
+        imagenPerfil: url,
+      }
+    }
+      this.personaService.update(1,payload).subscribe({
+        next: (v) => {
+          this.showSuccess();
+          this.ngOnInit();
+        },
+        error: (e) => {
+          this.showError();
+          this.ngOnInit();
+        },
+        complete: () => this.formModal.hide()
+      });
+
 
   }
 
@@ -94,6 +181,10 @@ export class EncabezadoComponent implements OnInit {
 
   showSuccess() {
     this.toastr.success('Las modificacions se realizaron con exito');
+  }
+
+  showError() {
+    this.toastr.error('Error al realizar las modificaciones, por favor pruebe nuevamente en unos minutos');
   }
 
   saveInfoContacto(event: Event){

@@ -49,14 +49,14 @@
         <div class="bannerContainer">
             <img class="imagenArriba" [src]="miPortfolio?.imagenHeader">
             <span class="iconoBanner">
-              <button class="btn" *ngIf="(estaLogueado | async)">
+              <button class="btn" *ngIf="(estaLogueado | async)" (click)="openFotoFormModal('header')" >
               <fa-icon [icon]="editIcon" size="lg"></fa-icon>
             </button>
             </span>
         </div>
         <div class="imgPerfilContainer">
             <img [src]="miPortfolio?.imagenPerfil" class="rounded-circle imgCirculoPerfil" width="150 " height="150 ">
-            <button class="btn" *ngIf="(estaLogueado | async)">
+            <button class="btn" *ngIf="(estaLogueado | async)" (click)="openFotoFormModal('perfil')">
                 <fa-icon [icon]="editIcon" size="lg"></fa-icon>
               </button>
         </div>
@@ -197,4 +197,29 @@
             </div>
         </div>
     </div>
+    <!--form modal IMAGEN-->
+    <div class="modal fade" id="modalFoto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel" >Modificar foto</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form [formGroup]="formFoto" (ngSubmit)="handleSaveFoto($event, tipoFoto)">
+                  <div class="modal-body">
+                     <div class="mb-3">
+                          <label for="imagen" class="form-label">{{tituloFoto}}</label>
+                          <input type="file" formControlName="imagen" class="form-control" id="imagen" aria-describedby="logoInstitucionHelp" (change)="cambioArchivo($event)">
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary" [disabled]="formFoto.invalid">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="(isUploading)"></span>
+                        {{isUploading ? "Guardando cambios": "Guardar cambios"}}
+                       </button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
 </div>
