@@ -135,9 +135,18 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="input-group mb-3">
                             <label for="fechaInicio" class="form-label">Fecha Inicio:</label>
-                            <input formControlName="fechaInicio" class="form-control" id="fechaInicio" aria-describedby="fechaInicioHelp">
+                            <div class="input-group">
+                            <input disable formControlName="fechaInicio" class="form-control" id="fechaInicio" aria-describedby="fechaInicioHelp" placeholder="dd/mm/aaaa"
+                            name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" (click)="d.toggle()">
+                                <fa-icon [icon]="calendarIcon" size="lg"></fa-icon>
+                              </button>
+                            </div>
+                          </div>
+
                             <div *ngIf="form.get('fechaInicio')?.errors && form.get('fechaInicio')?.touched">
                                 <p *ngIf="form.get('fechaInicio')?.hasError('required')" class="text-danger">
                                     Ingrese por favor la fecha de inicio.

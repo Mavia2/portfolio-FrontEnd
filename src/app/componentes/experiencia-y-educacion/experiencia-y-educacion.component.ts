@@ -1,12 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
-import { faPen, faPlusCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faPlusCircle, faTrashAlt, faCalendarDay} from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { finalize, Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { ExperienciaService } from 'src/app/servicios/experiencia.service';
 import { EducacionService } from 'src/app/servicios/educacion.service';
 import {  StorageService } from 'src/app/servicios/firebase-storage.service';
+import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { MomentDateFormatter } from 'src/app/utils/MomentDateFormatter ';
+import * as moment from 'moment';
 declare var window: any;
 
 @Component({
@@ -14,10 +17,13 @@ declare var window: any;
   templateUrl: './experiencia-y-educacion.component.html',
   styleUrls: ['./experiencia-y-educacion.component.css']
 })
+
+
 export class ExperienciaYEducacionComponent implements OnInit {
   educacionList: any;
   experienciaList:any;
   editIcon = faPen;
+  calendarIcon = faCalendarDay;
   deleteIcon = faTrashAlt;
   addIcon = faPlusCircle;
   formModal: any;
@@ -35,11 +41,12 @@ export class ExperienciaYEducacionComponent implements OnInit {
   nombreArchivo = '';
   isUploading: boolean = false;
   fotoUrlDefault = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/1920px-IBM_logo.svg.png"
-
+  model: any;
 
   @Input() estaLogueado: Observable<boolean>;
 
   constructor(
+    private ngbDateParserFormatter: NgbDateParserFormatter,
     private readonly storageService: StorageService,
     private formBuilderEducacion:FormBuilder,
     private toastr: ToastrService,
@@ -101,6 +108,9 @@ export class ExperienciaYEducacionComponent implements OnInit {
       this.esEditar = true;
       this.form.patchValue(this.experienciaList[index]);
       this.form.patchValue({imagen: null});
+      const date = this.form.value.fechaInicio
+      const newDate = {year: Number(moment(date).format('YYYY')), month: Number(moment(date).format('M')), day: Number(moment(date).format('D'))};
+      this.form.patchValue({fechaInicio: newDate});
       this.formModal.show();
     } else {
       this.esEditar = false
@@ -187,27 +197,35 @@ export class ExperienciaYEducacionComponent implements OnInit {
         type === "experiencia" ? this.formModal.hide(): this.formModalEducacion.hide();
       });
     } else {
-      save(this.formEducacion.value.fotoUrl, esEditar, index);
+      save(type === "experiencia" ? this.form.value.fotoUrl : this.formEducacion.value.fotoUrl, esEditar, index);
       type === "experiencia" ? this.formModal.hide(): this.formModalEducacion.hide();
     }
   }
 
   saveExperiencia = (url: string, esEditar: boolean, index?: any) => {
+    let ngbDate = this.form.controls['fechaInicio'].value;
+    let myDate = this.ngbDateParserFormatter.format(ngbDate);
     if (esEditar){
       this.form.patchValue({fotoUrl: url});
       this.experienciaList[index] = this.form.value
       this.experienciaService.update(this.experienciaList[index].id,{
         fotoUrl: this.experienciaList[index].fotoUrl,
         institucion: this.experienciaList[index].institucion,
-        fechaInicio: this.experienciaList[index].fechaInicio,
+        fechaInicio: myDate,
         fechaFin: this.experienciaList[index].fechaFin,
         lugar: this.experienciaList[index].lugar,
         cargo: this.experienciaList[index].cargo,
         descripcion: this.experienciaList[index].descripcion,
         idPersona: 1
       }).subscribe({
-        next: (v) => this.showSuccess(),
-        error: (e) => this.showError(),
+        next: (v) => {
+          this.ngOnInit();
+          this.showSuccess();
+        },
+        error: (e) =>  {
+          this.showError();
+          this.ngOnInit();
+        },
         complete: () => this.formModal.hide()
       });
 
@@ -215,7 +233,7 @@ export class ExperienciaYEducacionComponent implements OnInit {
       const payLoad = {
         fotoUrl: url,
         institucion: this.form.value.institucion,
-        fechaInicio: this.form.value.fechaInicio,
+        fechaInicio: myDate,
         fechaFin: this.form.value.fechaFin,
         lugar: this.form.value.lugar,
         cargo: this.form.value.cargo,
@@ -258,10 +276,12 @@ export class ExperienciaYEducacionComponent implements OnInit {
         next: (v) => {
           this.showSuccess();
           this.educacionList[index].imagen = null;
+          this.ngOnInit();
         },
         error: (e) => {
           this.showError();
           this.educacionList[index].imagen = null;
+          this.ngOnInit();
         },
         complete: () => this.formModal.hide()
       });

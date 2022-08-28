@@ -22,6 +22,8 @@ import { AutenticacionService } from './servicios/autenticacion.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
+import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MomentDateFormatter } from './utils/MomentDateFormatter ';
 
 
 
@@ -49,12 +51,13 @@ import { ToastrModule } from 'ngx-toastr';
     FontAwesomeModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
 
   ],
 
   providers: [ AutenticacionService,
-    {provide:HTTP_INTERCEPTORS, useClass:InterceptorService, multi:true}
+    {provide:HTTP_INTERCEPTORS, useClass:InterceptorService, multi:true}, {provide: NgbDateParserFormatter, useValue: new MomentDateFormatter()}
   ],
 
 
