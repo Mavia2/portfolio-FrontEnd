@@ -15,7 +15,6 @@ export class AutenticacionService {
   isLoginSubject: BehaviorSubject<boolean>;
 
   constructor(private http:HttpClient) {
-    console.log("El servicio de autenticación está corriendo");
     this.currentUserSubject= new BehaviorSubject<any>(JSON.parse(sessionStorage.getItem('currentUser')|| '{}'));
     this.isLoginSubject = new BehaviorSubject<boolean>(this.hasToken());
    }

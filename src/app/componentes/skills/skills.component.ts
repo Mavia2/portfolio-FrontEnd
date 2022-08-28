@@ -83,7 +83,6 @@ export class SkillsComponent implements OnInit {
         idPersona: 1
       } ).subscribe({
         next: (data) => {
-          console.log("DATA SKILL", data)
           this.ngOnInit();
           this.showSuccess();
         },
@@ -100,7 +99,6 @@ export class SkillsComponent implements OnInit {
       }
       this.skillService.save(payLoad).subscribe({
         next: (data) => {
-          console.log("DATA EXPERIENCIA",data);
           this.ngOnInit();
           this.showSuccess();
         },

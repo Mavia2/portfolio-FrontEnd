@@ -47,8 +47,6 @@ export class IniciarSesionComponent implements OnInit {
     this.isLoading = true;
     this.autenticacionService.IniciarSesion(this.form.value).subscribe({
       next: (data) => {
-        console.log("DATA:" + JSON.stringify(data));
-
         this.ruta.navigate(['/']);
       },
       error: (error) => {

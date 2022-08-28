@@ -20,7 +20,6 @@ export class StorageService {
     fileName : string,
     file: File,
   ): FilesUploadMetadata {
-    console.log("FILE", file);
     const metadata = {
       contentType: 'image/png',
     };

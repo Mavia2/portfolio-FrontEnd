@@ -74,7 +74,6 @@ export class ProyectosComponent implements OnInit {
     // endpoint delete
     this.eliminarIndex = index;
     this.formModalEliminar.show();
-    console.log('TEST')
   }
 
   showSuccess() {
@@ -97,7 +96,6 @@ export class ProyectosComponent implements OnInit {
         idPersona: 1
       } ).subscribe({
         next: (data) => {
-          console.log("DATA PROYECTO", data)
           this.ngOnInit();
           this.showSuccess();
         },
@@ -116,7 +114,6 @@ export class ProyectosComponent implements OnInit {
       }
       this.proyectoService.save(payLoad).subscribe({
         next: (data) => {
-          console.log("DATA PROYECTO",data);
           this.ngOnInit();
           this.showSuccess();
         },
