@@ -8,7 +8,6 @@ import { ExperienciaService } from 'src/app/servicios/experiencia.service';
 import { EducacionService } from 'src/app/servicios/educacion.service';
 import {  StorageService } from 'src/app/servicios/firebase-storage.service';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { MomentDateFormatter } from 'src/app/utils/MomentDateFormatter ';
 import * as moment from 'moment';
 import { Educacion } from 'src/app/model/educacion';
 import { Experiencia } from 'src/app/model/experiencia';
@@ -42,7 +41,8 @@ export class ExperienciaYEducacionComponent implements OnInit {
   file?: File;
   nombreArchivo = '';
   isUploading: boolean = false;
-  fotoUrlDefault = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/1920px-IBM_logo.svg.png"
+  fotoUrlDefaultEducacion = "https://firebasestorage.googleapis.com/v0/b/mi-portfolio-5b0c8.appspot.com/o/1%2F1661701219077_Publicaci%C3%B3n%20de%20Instagram%201080x1080%20px.jpeg?alt=media&token=aba41820-5466-474e-8899-0e0af10750ad"
+  fotoUrlDefaultExperiencia = "https://firebasestorage.googleapis.com/v0/b/mi-portfolio-5b0c8.appspot.com/o/1%2F1661701842082_pngwing.com.png?alt=media&token=413fed77-c2c6-4279-a1d3-cdecc1c9aaea"
   model: any;
   modelFin: any;
   modelEducacionInicio: any;
@@ -126,7 +126,7 @@ export class ExperienciaYEducacionComponent implements OnInit {
     } else {
       this.esEditar = false
       this.form.reset()
-      this.form.patchValue({fotoUrl: this.fotoUrlDefault})
+      this.form.patchValue({fotoUrl: this.fotoUrlDefaultExperiencia})
       this.formModal.show();
     }
   }
@@ -147,7 +147,7 @@ export class ExperienciaYEducacionComponent implements OnInit {
     } else {
       this.esEditar = false
       this.formEducacion.reset()
-      this.formEducacion.patchValue({fotoUrl: this.fotoUrlDefault})
+      this.formEducacion.patchValue({fotoUrl: this.fotoUrlDefaultEducacion})
       this.formModalEducacion.show();
     }
   }

@@ -12,6 +12,7 @@ import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 export class IniciarSesionComponent implements OnInit {
   form:FormGroup;
   isLoading = false;
+  hide = true;
 
   constructor(private formBuilder:FormBuilder, private autenticacionService:AutenticacionService, private ruta:Router) {
     this.form=this.formBuilder.group(
