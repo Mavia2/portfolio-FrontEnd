@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  baseUrl: 'https://portfolio-ar-app.herokuapp.com',
   firebase: {
     apiKey: "AIzaSyASjQRcuCwUvVX53ovX4fEfTCHKgDTXT9U",
     authDomain: "mi-portfolio-5b0c8.firebaseapp.com",
