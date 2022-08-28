@@ -138,7 +138,7 @@
                         <div class="input-group mb-3">
                             <label for="fechaInicio" class="form-label">Fecha Inicio:</label>
                             <div class="input-group">
-                            <input disable formControlName="fechaInicio" class="form-control" id="fechaInicio" aria-describedby="fechaInicioHelp" placeholder="dd/mm/aaaa"
+                            <input formControlName="fechaInicio" class="form-control" id="fechaInicio" aria-describedby="fechaInicioHelp" placeholder="dd/mm/aaaa"
                             name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
                             <div class="input-group-append">
                               <button class="btn btn-outline-secondary" type="button" (click)="d.toggle()">
@@ -154,9 +154,16 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="input-group mb-3">
                             <label for="fechaFin" class="form-label">Fecha Fin:</label>
-                            <input formControlName="fechaFin" class="form-control" id="fechaFin" aria-describedby="fechaFinHelp">
+                            <div class="input-group">
+                              <input formControlName="fechaFin" class="form-control" id="fechaFin" aria-describedby="fechaFinHelp" placeholder="dd/mm/aaaa" name="dp2" [(ngModel)]="modelFin" ngbDatepicker #dFin="ngbDatepicker">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" (click)="dFin.toggle()">
+                                  <fa-icon [icon]="calendarIcon" size="lg"></fa-icon>
+                                </button>
+                              </div>
+                            </div>
                             <div *ngIf="form.get('fechaFin')?.errors && form.get('fechaFin')?.touched">
                                 <p *ngIf="form.get('fechaFin')?.hasError('required')" class="text-danger">
                                     Ingrese por favor la fecha de finalización laboral.
@@ -221,18 +228,32 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="mb-3">
+                        <div class="input-group mb-3">
                             <label for="fechaInicio" class="form-label">Fecha Inicio:</label>
-                            <input formControlName="fechaInicio" class="form-control" id="fechaInicio" aria-describedby="fechaInicioHelp">
+                            <div class="input-group">
+                              <input formControlName="fechaInicio" class="form-control" id="fechaInicio" aria-describedby="fechaInicioHelp" placeholder="dd/mm/aaaa" name="dp3" [(ngModel)]="modelEducacionInicio" ngbDatepicker #dEducacionInicio="ngbDatepicker">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" (click)="dEducacionInicio.toggle()">
+                                  <fa-icon [icon]="calendarIcon" size="lg"></fa-icon>
+                                </button>
+                              </div>
+                            </div>
                             <div *ngIf="formEducacion.get('fechaInicio')?.errors && formEducacion.get('fechaInicio')?.touched">
                                 <p *ngIf="formEducacion.get('fechaInicio')?.hasError('required')" class="text-danger">
                                     Ingrese por favor la fecha de inicio.
                                 </p>
                             </div>
                         </div>
-                        <div class="mb-3">
+                        <div class="input-group mb-3">
                             <label for="fechaFin" class="form-label">Fecha Fin:</label>
-                            <input formControlName="fechaFin" class="form-control" id="fechaFin" aria-describedby="fechaFinHelp">
+                            <div class="input-group">
+                              <input formControlName="fechaFin" class="form-control" id="fechaFin" aria-describedby="fechaFinHelp" placeholder="dd/mm/aaaa" name="dp4" [(ngModel)]="modelEducacionFin" ngbDatepicker #dEducacionFin="ngbDatepicker">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" (click)="dEducacionFin.toggle()">
+                                  <fa-icon [icon]="calendarIcon" size="lg"></fa-icon>
+                                </button>
+                              </div>
+                            </div>
                             <div *ngIf="formEducacion.get('fechaFin')?.errors && formEducacion.get('fechaFin')?.touched">
                                 <p *ngIf="formEducacion.get('fechaFin')?.hasError('required')" class="text-danger">
                                     Ingrese por favor la fecha de finalización laboral.
@@ -242,7 +263,7 @@
 
                         <div class="mb-3">
                             <label for="lugar" class="form-label">Ciudad:</label>
-                            <input formControlName="lugar" class="form-control" id="lugar" aria-describedby="ciudadHelp">
+                              <input formControlName="lugar" class="form-control" id="lugar" aria-describedby="ciudadHelp">
                             <div *ngIf="formEducacion.get('lugar')?.errors && formEducacion.get('lugar')?.touched">
                                 <p *ngIf="formEducacion.get('lugar')?.hasError('required')" class="text-danger">
                                     Ingrese por favor la ciudad en donde estudió.

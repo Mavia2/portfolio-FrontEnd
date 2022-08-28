@@ -10,6 +10,8 @@ import {  StorageService } from 'src/app/servicios/firebase-storage.service';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { MomentDateFormatter } from 'src/app/utils/MomentDateFormatter ';
 import * as moment from 'moment';
+import { Educacion } from 'src/app/model/educacion';
+import { Experiencia } from 'src/app/model/experiencia';
 declare var window: any;
 
 @Component({
@@ -42,6 +44,9 @@ export class ExperienciaYEducacionComponent implements OnInit {
   isUploading: boolean = false;
   fotoUrlDefault = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/1920px-IBM_logo.svg.png"
   model: any;
+  modelFin: any;
+  modelEducacionInicio: any;
+  modelEducacionFin: any;
 
   @Input() estaLogueado: Observable<boolean>;
 
@@ -85,9 +90,9 @@ export class ExperienciaYEducacionComponent implements OnInit {
 
   ngOnInit(): void {
     this.datosPorfolio.detail(1).subscribe(data=>{
-      this.educacionList=data.educaciones;
-      //this.educacionList.sort((a: Educacion,b: Educacion)=>{a.fechaFin - b.fechaFin})
-      this.experienciaList=data.experiencias;
+      const educacion = data.educaciones;
+      this.educacionList = educacion.sort((a: Educacion,b: Educacion)=>{return moment(b.fechaFin, "DD/MM/YYYY").diff(moment(a.fechaFin, "DD/MM/YYYY"));})
+      this.experienciaList=data.experiencias.sort((a: Experiencia,b: Experiencia)=>{return moment(b.fechaFin, "DD/MM/YYYY").diff(moment(a.fechaFin, "DD/MM/YYYY"));});
     });
 
     this.formModal = new window.bootstrap.Modal(
@@ -108,9 +113,15 @@ export class ExperienciaYEducacionComponent implements OnInit {
       this.esEditar = true;
       this.form.patchValue(this.experienciaList[index]);
       this.form.patchValue({imagen: null});
-      const date = this.form.value.fechaInicio
-      const newDate = {year: Number(moment(date).format('YYYY')), month: Number(moment(date).format('M')), day: Number(moment(date).format('D'))};
+      const date = moment(this.form.value.fechaInicio, "DD/MM/YYYY");
+      const newDate = {year: Number(date.format('YYYY')), month: Number(date.format('M')), day: Number(date.format('D'))};
       this.form.patchValue({fechaInicio: newDate});
+      const dateFin = moment(this.form.value.fechaFin, "DD/MM/YYYY");
+      const year = Number(dateFin.format('YYYY'));
+      const month = Number(dateFin.format('M'));
+      const day = Number(dateFin.format('D'));
+      const newDateFin = {year: year, month: month, day: day};
+      this.form.patchValue({fechaFin: newDateFin});
       this.formModal.show();
     } else {
       this.esEditar = false
@@ -126,6 +137,12 @@ export class ExperienciaYEducacionComponent implements OnInit {
       this.esEditar = true
       this.formEducacion.patchValue(this.educacionList[index])
       this.formEducacion.patchValue({imagen: null});
+      const date = moment(this.formEducacion.value.fechaInicio, "DD/MM/YYYY");
+      const newDate = {year: Number(date.format('YYYY')), month: Number(date.format('M')), day: Number(date.format('D'))};
+      this.formEducacion.patchValue({fechaInicio: newDate});
+      const dateFin = moment(this.formEducacion.value.fechaFin, "DD/MM/YYYY");
+      const newDateFin = {year: Number(dateFin.format('YYYY')), month: Number(dateFin.format('M')), day: Number(dateFin.format('D'))};
+      this.formEducacion.patchValue({fechaFin: newDateFin});
       this.formModalEducacion.show();
     } else {
       this.esEditar = false
@@ -204,7 +221,9 @@ export class ExperienciaYEducacionComponent implements OnInit {
 
   saveExperiencia = (url: string, esEditar: boolean, index?: any) => {
     let ngbDate = this.form.controls['fechaInicio'].value;
+    let ngbDateFin = this.form.controls['fechaFin'].value;
     let myDate = this.ngbDateParserFormatter.format(ngbDate);
+    let myDateFin = this.ngbDateParserFormatter.format(ngbDateFin);
     if (esEditar){
       this.form.patchValue({fotoUrl: url});
       this.experienciaList[index] = this.form.value
@@ -212,7 +231,7 @@ export class ExperienciaYEducacionComponent implements OnInit {
         fotoUrl: this.experienciaList[index].fotoUrl,
         institucion: this.experienciaList[index].institucion,
         fechaInicio: myDate,
-        fechaFin: this.experienciaList[index].fechaFin,
+        fechaFin: myDateFin,
         lugar: this.experienciaList[index].lugar,
         cargo: this.experienciaList[index].cargo,
         descripcion: this.experienciaList[index].descripcion,
@@ -234,7 +253,7 @@ export class ExperienciaYEducacionComponent implements OnInit {
         fotoUrl: url,
         institucion: this.form.value.institucion,
         fechaInicio: myDate,
-        fechaFin: this.form.value.fechaFin,
+        fechaFin: myDateFin,
         lugar: this.form.value.lugar,
         cargo: this.form.value.cargo,
         descripcion: this.form.value.descripcion,
@@ -261,16 +280,20 @@ export class ExperienciaYEducacionComponent implements OnInit {
   }
 
   saveEducacion = (url: string, esEditar: boolean, index?: any)=>{
+    let ngbDate = this.formEducacion.controls['fechaInicio'].value;
+    let ngbDateFin = this.formEducacion.controls['fechaFin'].value;
+    let myDate = this.ngbDateParserFormatter.format(ngbDate);
+    let myDateFin = this.ngbDateParserFormatter.format(ngbDateFin);
     if (esEditar){
       this.formEducacion.patchValue({fotoUrl: url});
       this.educacionList[index] = this.formEducacion.value
       this.educacionService.update(this.educacionList[index].id,{
         fotoUrl: this.educacionList[index].fotoUrl,
         institucion: this.educacionList[index].institucion,
-        fechaInicio: this.educacionList[index].fechaInicio,
+        fechaInicio: myDate,
         titulo: this.educacionList[index].titulo,
         lugar: this.educacionList[index].lugar,
-        fechaFin: this.experienciaList[index].fechaFin,
+        fechaFin: myDateFin,
         idPersona: 1
       }).subscribe({
         next: (v) => {
@@ -290,8 +313,8 @@ export class ExperienciaYEducacionComponent implements OnInit {
       const payLoad = {
         fotoUrl: url,
         institucion: this.formEducacion.value.institucion,
-        fechaInicio: this.formEducacion.value.fechaInicio,
-        fechaFin: this.formEducacion.value.fechaFin,
+        fechaInicio: myDate,
+        fechaFin: myDateFin,
         lugar: this.formEducacion.value.lugar,
         titulo: this.formEducacion.value.titulo,
         idPersona: 1,
