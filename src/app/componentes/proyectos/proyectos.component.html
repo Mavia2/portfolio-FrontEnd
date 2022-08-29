@@ -1,7 +1,7 @@
 <!-- Seccion proyectos  -->
 <div class="card ">
     <div class="row justify-content-between align-items-center">
-        <div class="col-8 titulosResaltados">
+        <div class="col-10 titulosResaltados">
             Proyectos
         </div>
         <div class="col-2 d-flex justify-content-end">
@@ -53,7 +53,7 @@
                 <form [formGroup]="form" (ngSubmit)="save($event, esEditar, index )">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="titulo" class="form-label">Titulo</label>
+                            <label for="titulo" class="form-label">Título:</label>
                             <input formControlName="titulo" class="form-control" id="titulo" aria-describedby="tituloHelp">
                             <div *ngIf="form.get('titulo')?.errors && form.get('titulo')?.touched">
                                 <p *ngIf="form.get('titulo')?.hasError('required')" class="text-danger">
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="descripcion" class="form-label">Descripción</label>
+                            <label for="descripcion" class="form-label">Descripción:</label>
                             <input formControlName="descripcion" class="form-control" id="descripcion" aria-describedby="descripcionHelp">
                             <div *ngIf="form.get('descripcion')?.errors && form.get('descripcion')?.touched">
                                 <p *ngIf="form.get('descripcion')?.hasError('required')" class="text-danger">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="fechaRealizacion" class="form-label">Fecha Realización</label>
+                            <label for="fechaRealizacion" class="form-label">Fecha Realización:</label>
                             <input formControlName="fechaRealizacion" class="form-control" id="fechaRealizacion" aria-describedby="fecharealizacionHelp">
                             <div *ngIf="form.get('fechaRealizacion')?.errors && form.get('fechaRealizacion')?.touched">
                                 <p *ngIf="form.get('fechaRealizacion')?.hasError('required')" class="text-danger">
@@ -81,7 +81,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="proyectoUrl" class="form-label">Proyecto Url</label>
+                            <label for="proyectoUrl" class="form-label">Proyecto Url:</label>
                             <input formControlName="proyectoUrl" class="form-control" id="proyectoUrl" aria-describedby="proyectoUrlHelp">
                             <div *ngIf="form.get('proyectoUrl')?.errors && form.get('proyectoUrl')?.touched">
                                 <p *ngIf="form.get('proyectoUrl')?.hasError('required')" class="text-danger">

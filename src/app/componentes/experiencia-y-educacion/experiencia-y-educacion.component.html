@@ -49,7 +49,7 @@
 
 
     <div class="row justify-content-between align-items-center row py-3">
-        <div class="col-8 titulosResaltados">
+        <div class="col-10 titulosResaltados">
             Educación
         </div>
         <div class="col-2 d-flex justify-content-end">
@@ -103,7 +103,7 @@
                 <form [formGroup]="form" (ngSubmit)="handleSaveExperiencia($event, esEditar, index )">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="institucion" class="form-label">Institución</label>
+                            <label for="institucion" class="form-label">Institución:</label>
                             <input formControlName="institucion" class="form-control" id="institucion" aria-describedby="institucionHelp">
                             <div *ngIf="form.get('institucion')?.errors && form.get('institucion')?.touched">
                                 <p *ngIf="form.get('institucion')?.hasError('required')" class="text-danger">
@@ -112,11 +112,11 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="imagen" class="form-label">Logo Institucion</label>
+                            <label for="imagen" class="form-label">Logo Institucion:</label>
                             <input type="file" formControlName="imagen" accept="image/*" class="form-control" id="imagen" aria-describedby="logoInstitucionHelp" (change)="cambioArchivo($event)">
                         </div>
                         <div class="mb-3">
-                            <label for="cargo" class="form-label">Cargo</label>
+                            <label for="cargo" class="form-label">Cargo:</label>
                             <input formControlName="cargo" class="form-control" id="cargo" aria-describedby="cargoHelp">
                             <div *ngIf="form.get('cargo')?.errors && form.get('cargo')?.touched">
                                 <p *ngIf="form.get('cargo')?.hasError('required')" class="text-danger">
@@ -126,7 +126,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="descripcion" class="form-label">Descripción</label>
+                            <label for="descripcion" class="form-label">Descripción:</label>
                             <input formControlName="descripcion" class="form-control" id="descripcion" aria-describedby="descripcionHelp">
                             <div *ngIf="form.get('descripcion')?.errors && form.get('descripcion')?.touched">
                                 <p *ngIf="form.get('descripcion')?.hasError('required')" class="text-danger">
@@ -206,7 +206,7 @@
                 <form [formGroup]="formEducacion" (ngSubmit)="handleSaveEducacion($event, esEditar, index )">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="institucion" class="form-label">Institución</label>
+                            <label for="institucion" class="form-label">Institución:</label>
                             <input formControlName="institucion" class="form-control" id="institucion" aria-describedby="institucionHelp">
                             <div *ngIf="formEducacion.get('institucion')?.errors && formEducacion.get('institucion')?.touched">
                                 <p *ngIf="formEducacion.get('institucion')?.hasError('required')" class="text-danger">
@@ -215,12 +215,12 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="imagen" class="form-label">Logo Institucion</label>
+                            <label for="imagen" class="form-label">Logo Institución:</label>
                             <input type="file" formControlName="imagen" class="form-control" id="imagen" aria-describedby="logoInstitucionHelp" (change)="cambioArchivo($event)">
 
                         </div>
                         <div class="mb-3">
-                            <label for="titulo" class="form-label">Título</label>
+                            <label for="titulo" class="form-label">Título:</label>
                             <input formControlName="titulo" class="form-control" id="titulo" aria-describedby="cargoHelp">
                             <div *ngIf="formEducacion.get('titulo')?.errors && formEducacion.get('titulo')?.touched">
                                 <p *ngIf="formEducacion.get('titulo')?.hasError('required')" class="text-danger">
