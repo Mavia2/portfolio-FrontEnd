@@ -5,8 +5,8 @@ import { PortfolioComponent } from './componentes/portfolio/portfolio.component'
 import { GuardGuard } from './servicios/guard.guard';
 
 const routes: Routes = [
-  {path:'',component:PortfolioComponent},
-  {path:'iniciar-sesion',component:IniciarSesionComponent},
+  {path:'',component:PortfolioComponent, data: {title: 'Mi Portfolio'}},
+  {path:'iniciar-sesion',component:IniciarSesionComponent, data: {title: 'Login'}},
   {path:'',redirectTo:'iniciar-sesion',pathMatch:'full'}
 ];
 
