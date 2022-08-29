@@ -220,11 +220,11 @@
 
                         </div>
                         <div class="mb-3">
-                            <label for="titulo" class="form-label">Titulo</label>
+                            <label for="titulo" class="form-label">Título</label>
                             <input formControlName="titulo" class="form-control" id="titulo" aria-describedby="cargoHelp">
                             <div *ngIf="formEducacion.get('titulo')?.errors && formEducacion.get('titulo')?.touched">
                                 <p *ngIf="formEducacion.get('titulo')?.hasError('required')" class="text-danger">
-                                    El titulo es requerido.
+                                    El título es requerido.
                                 </p>
                             </div>
                         </div>
