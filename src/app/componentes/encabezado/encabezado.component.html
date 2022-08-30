@@ -47,7 +47,7 @@
 
     <div class="cardHeader">
         <div class="bannerContainer">
-            <img class="imagenArriba" [src]="miPortfolio?.imagenHeader">
+            <img class="imagenArriba" [src]="miPortfolio.imagenHeader">
             <span class="iconoBanner">
               <button class="btn" *ngIf="(estaLogueado | async)" (click)="openFotoFormModal('header')" >
               <fa-icon [icon]="editIcon" size="lg"></fa-icon>
@@ -55,7 +55,7 @@
             </span>
         </div>
         <div class="imgPerfilContainer">
-            <img [src]="miPortfolio?.imagenPerfil" class="rounded-circle imgCirculoPerfil" width="150 " height="150 ">
+            <img [src]="miPortfolio.imagenPerfil" class="rounded-circle imgCirculoPerfil" width="150 " height="150 ">
             <button class="btn" *ngIf="(estaLogueado | async)" (click)="openFotoFormModal('perfil')">
                 <fa-icon [icon]="editIcon" size="lg"></fa-icon>
               </button>
@@ -64,16 +64,16 @@
             <div class="row">
                 <div class=" col-lg-10">
                     <div class="nombreContainer">
-                        <h1 class="nombreCompleto">{{miPortfolio?.nombre}} {{miPortfolio?.apellido}}</h1>
+                        <h1 class="nombreCompleto">{{miPortfolio.nombre}} {{miPortfolio.apellido}}</h1>
                         <button class="btn" (click)="openFormModal()" *ngIf="(estaLogueado | async)">
                             <span class="icono">
                               <fa-icon [icon]="editIcon" size="lg"></fa-icon>
                             </span>
                         </button>
                     </div>
-                    <div id="Info empresa ">{{miPortfolio?.ocupacion}}</div>
+                    <div id="Info empresa ">{{miPortfolio.ocupacion}}</div>
                     <div id="Info Contacto ">
-                        <span> {{miPortfolio?.ciudad}} ({{miPortfolio?.pais}})</span>
+                        <span> {{miPortfolio.ciudad}} ({{miPortfolio.pais}})</span>
 
                         <button type="button" class="btn btn-link" (click)="openformInfoContacto()">Información de contacto</button>
 
